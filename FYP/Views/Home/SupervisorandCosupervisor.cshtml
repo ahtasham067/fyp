@@ -1,8 +1,11 @@
-﻿
+﻿@model FYP.ViewModels.SupervisorandCosupervisorVM
+
 @{
     Layout = null;
 }
+
 <!DOCTYPE html>
+
 <html>
 <head>
     <title>
@@ -31,6 +34,7 @@
     </script>
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
     </link>
+
 </head>
 <body>
     <div class="container backgroungcolor">
@@ -84,7 +88,10 @@
             </div>
         </div>
         <hr class="style1">
-        <!--Supervisor-->
+        @using (Html.BeginForm("SupervisorandCosupervisor", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <!--Supervisor-->
         <div class="container formwidthfontcolor" id="AddSupervisorId">
             <div class="text-center">
                 <h1>
@@ -98,8 +105,8 @@
                     </span>
                     Name
                 </label>
-                <input class="form-control" id="inputTitle" placeholder="*Supervisor Name" type="text">
-                </input>
+                    @Html.EditorFor(model => model.SupervisorName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SupervisorName, "", new { @class = "text-danger" })
             </div>
             <div class="form-row">
                 <div class="form-group text-right">
@@ -109,192 +116,197 @@
                 </div>
             </div>
         </div>
-        <div class="container formwidthfontcolor" id="AddCo-SupervisorId1">
-            <div class="text-center">
-                <h1>
-                    Add Co-Supervisor
-                </h1>
-            </div>
-            <div class="form-group">
-                <label for="inputTitle">
-                    <span class="text-danger">
-                        *
-                    </span>
-                    Name
-                </label>
-                <input class="form-control" id="inputTitle" placeholder="*Co-Supervisor Name" type="text">
-                </input>
-            </div>
-            <div class="form-row">
-                <div class="form-group text-right">
-                    <button class="btn btn-primary" type="submit">
-                        Add
-                    </button>
+        }
+        @using (Html.BeginForm("SupervisorandCosupervisor", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="container formwidthfontcolor" id="AddCo-SupervisorId1">
+                <div class="text-center">
+                    <h1>
+                        Add Co-Supervisor
+                    </h1>
+                </div>
+                <div class="form-group">
+                    <label for="inputTitle">
+                        <span class="text-danger">
+                            *
+                        </span>
+                        Name
+                    </label>
+                    @Html.EditorFor(model => model.CoSupervisorName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CoSupervisorName, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-row">
+                    <div class="form-group text-right">
+                        <button class="btn btn-primary" type="submit">
+                            Add
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
         <!--View Supervisor-->
-        <div class="container formwidthfontcolor" id="ViewSupervisorId">
-            <div class="text-center">
-                <h1>
-                    View Supervisor
-                </h1>
-            </div>
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">
-                            Sr#
-                        </th>
-                        <th scope="col">
-                            Name
-                        </th>
-                        <th scope="col">
-                            Details
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">
-                            1
-                        </th>
-                        <td>
-                            Mark
-                        </td>
-                        <td>
-                            Otto
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            2
-                        </th>
-                        <td>
-                            Jacob
-                        </td>
-                        <td>
-                            Thornton
-                        </td>
+            <div class="container formwidthfontcolor" id="ViewSupervisorId">
+                <div class="text-center">
+                    <h1>
+                        View Supervisor
+                    </h1>
+                </div>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">
+                                Sr#
+                            </th>
+                            <th scope="col">
+                                Name
+                            </th>
+                            <th scope="col">
+                                Details
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">
+                                1
+                            </th>
+                            <td>
+                                Mark
+                            </td>
+                            <td>
+                                Otto
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                2
+                            </th>
+                            <td>
+                                Jacob
+                            </td>
+                            <td>
+                                Thornton
+                            </td>
 
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            3
-                        </th>
-                        <td>
-                            Larry
-                        </td>
-                        <td>
-                            the Bird
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <!--View Co-Supervisor-->
-        <div class="container formwidthfontcolor" id="ViewCo-SupervisorId">
-            <div class="text-center">
-                <h1>
-                    View Co-Supervisor
-                </h1>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                3
+                            </th>
+                            <td>
+                                Larry
+                            </td>
+                            <td>
+                                the Bird
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">
-                            Sr#
-                        </th>
-                        <th scope="col">
-                            Name
-                        </th>
-                        <th scope="col">
-                            Details
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">
-                            1
-                        </th>
-                        <td>
-                            Mark
-                        </td>
-                        <td>
-                            Otto
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            2
-                        </th>
-                        <td>
-                            Jacob
-                        </td>
-                        <td>
-                            Thornton
-                        </td>
+            <!--View Co-Supervisor-->
+            <div class="container formwidthfontcolor" id="ViewCo-SupervisorId">
+                <div class="text-center">
+                    <h1>
+                        View Co-Supervisor
+                    </h1>
+                </div>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">
+                                Sr#
+                            </th>
+                            <th scope="col">
+                                Name
+                            </th>
+                            <th scope="col">
+                                Details
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">
+                                1
+                            </th>
+                            <td>
+                                Mark
+                            </td>
+                            <td>
+                                Otto
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                2
+                            </th>
+                            <td>
+                                Jacob
+                            </td>
+                            <td>
+                                Thornton
+                            </td>
 
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            3
-                        </th>
-                        <td>
-                            Larry
-                        </td>
-                        <td>
-                            the Bird
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="row mt-3">
-            <div class="col footerbackgroundcolor">
-                <div class="text-center mt-3 footertextcolor">
-                    <a href="#">
-                        FYPOnline,
-                    </a>
-                    Principal Seat © 2018-COMSATS ®
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                3
+                            </th>
+                            <td>
+                                Larry
+                            </td>
+                            <td>
+                                the Bird
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row mt-3">
+                <div class="col footerbackgroundcolor">
+                    <div class="text-center mt-3 footertextcolor">
+                        <a href="#">
+                            FYPOnline,
+                        </a>
+                        Principal Seat © 2018-COMSATS ®
+                    </div>
                 </div>
             </div>
+            </hr>
         </div>
-        </hr>
-    </div>
 </body>
 </html>
 <!-- Dropdown move to next page -->
 <script type="text/javascript">
     $(document).ready(function () {
-                $("#AddSupervisorId").show();
-                $("#ViewSupervisorId").hide();
-                $("#AddCo-SupervisorId1").hide();
-                $("#ViewCo-SupervisorId").hide();
-            });
-            $(".AddSupervisor").click(function () {
-                $("#AddSupervisorId").show();
-                $("#ViewSupervisorId").hide();
-                $("#AddCo-SupervisorId1").hide();
-                $("#ViewCo-SupervisorId").hide();
-            });
-            $(".ViewSupervisor").click(function () {
-                $("#AddSupervisorId").hide();
-                $("#ViewSupervisorId").show();
-                $("#AddCo-SupervisorId1").hide();
-                $("#ViewCo-SupervisorId").hide();
-            });
-            $(".ViewCo-Supervisor").click(function () {
-               $("#AddSupervisorId").hide();
-                $("#ViewSupervisorId").hide();
-                $("#AddCo-SupervisorId1").hide();
-                $("#ViewCo-SupervisorId").show();
-            });
-            $(".AddCo-Supervisor").click(function () {
-               $("#AddSupervisorId").hide();
-                $("#ViewSupervisorId").hide();
-                $("#AddCo-SupervisorId1").show();
-                $("#ViewCo-SupervisorId").hide();
-            });
+        $("#AddSupervisorId").show();
+        $("#ViewSupervisorId").hide();
+        $("#AddCo-SupervisorId1").hide();
+        $("#ViewCo-SupervisorId").hide();
+    });
+    $(".AddSupervisor").click(function () {
+        $("#AddSupervisorId").show();
+        $("#ViewSupervisorId").hide();
+        $("#AddCo-SupervisorId1").hide();
+        $("#ViewCo-SupervisorId").hide();
+    });
+    $(".ViewSupervisor").click(function () {
+        $("#AddSupervisorId").hide();
+        $("#ViewSupervisorId").show();
+        $("#AddCo-SupervisorId1").hide();
+        $("#ViewCo-SupervisorId").hide();
+    });
+    $(".ViewCo-Supervisor").click(function () {
+        $("#AddSupervisorId").hide();
+        $("#ViewSupervisorId").hide();
+        $("#AddCo-SupervisorId1").hide();
+        $("#ViewCo-SupervisorId").show();
+    });
+    $(".AddCo-Supervisor").click(function () {
+        $("#AddSupervisorId").hide();
+        $("#ViewSupervisorId").hide();
+        $("#AddCo-SupervisorId1").show();
+        $("#ViewCo-SupervisorId").hide();
+    });
 </script>
