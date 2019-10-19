@@ -1,8 +1,11 @@
-﻿
+﻿@model FYP.ViewModels.AddLoginDetailVM
+
 @{
     Layout = null;
 }
+
 <!DOCTYPE html>
+
 <html>
 <head>
     <title>
@@ -93,258 +96,288 @@
             </div>
         </div>
         <hr class="style1">
-        <!--Batch-->
-        <div class="container formwidthfontcolor" id="AddBatchId">
-            <div class="text-center">
-                <h1>
-                    Add Batch
-                </h1>
-            </div>
-            <div class="form-group">
-                <label for="inputTitle">
-                    <span class="text-danger">
-                        *
-                    </span>
-                    Name
-                </label>
-                <input class="form-control" id="inputTitle" placeholder="*BatchName" type="text">
-                </input>
-            </div>
-            <div class="form-row">
-                <div class="form-group text-right">
-                    <button class="btn btn-primary" type="submit">
-                        Add
-                    </button>
+        @using (Html.BeginForm("AddLoginDetail", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <!--Batch-->
+            <div class="container formwidthfontcolor" id="AddBatchId">
+                <div class="text-center">
+                    <h1>
+                        Add Batch
+                    </h1>
+                </div>
+                <div class="form-group">
+                    <label for="inputTitle">
+                        <span class="text-danger">
+                            *
+                        </span>
+                        Name
+                    </label>
+                    @Html.EditorFor(model => model.BatchName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.BatchName, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-row">
+                    <div class="form-group text-right">
+                        <button class="btn btn-primary" type="submit">
+                            Add
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!--Program-->
-        <div class="container formwidthfontcolor" id="AddProgramId">
-            <div class="text-center">
-                <h1>
-                    Add Program
-                </h1>
-            </div>
-            <div class="form-group">
-                <label for="inputTitle">
-                    <span class="text-danger">
-                        *
-                    </span>
-                    Name
-                </label>
-                <input class="form-control" id="inputTitle" placeholder="*Program Name" type="text">
-                </input>
-            </div>
-            <div class="form-row">
-                <div class="form-group text-right">
-                    <button class="btn btn-primary" type="submit">
-                        Add
-                    </button>
+        }
+        @using (Html.BeginForm("AddLoginDetail", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <!--Program-->
+            <div class="container formwidthfontcolor" id="AddProgramId">
+                <div class="text-center">
+                    <h1>
+                        Add Program
+                    </h1>
+                </div>
+                <div class="form-group">
+                    <label for="inputTitle">
+                        <span class="text-danger">
+                            *
+                        </span>
+                        Name
+                    </label>
+                    @Html.EditorFor(model => model.ProgramName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ProgramName, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-row">
+                    <div class="form-group text-right">
+                        <button class="btn btn-primary" type="submit">
+                            Add
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!--Campus-->
-        <div class="container formwidthfontcolor" id="AddCampusId">
-            <div class="text-center">
-                <h1>
-                    Add Campus
-                </h1>
-            </div>
-            <div class="form-group">
-                <label for="inputTitle">
-                    <span class="text-danger">
-                        *
-                    </span>
-                    Name
-                </label>
-                <input class="form-control" id="inputTitle" placeholder="*Campus Name" type="text">
-                </input>
-            </div>
-            <div class="form-row">
-                <div class="form-group text-right">
-                    <button class="btn btn-primary" type="submit">
-                        Add
-                    </button>
+        }
+        @using (Html.BeginForm("AddLoginDetail", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <!--Campus-->
+            <div class="container formwidthfontcolor" id="AddCampusId">
+                <div class="text-center">
+                    <h1>
+                        Add Campus
+                    </h1>
+                </div>
+                <div class="form-group">
+                    <label for="inputTitle">
+                        <span class="text-danger">
+                            *
+                        </span>
+                        Name
+                    </label>
+                    @Html.EditorFor(model => model.CampusName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CampusName, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-row">
+                    <div class="form-group text-right">
+                        <button class="btn btn-primary" type="submit">
+                            Add
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!--View Batch-->
-        <div class="container formwidthfontcolor" id="ViewBatchId">
-            <div class="text-center">
-                <h1>
-                    View Batch
-                </h1>
-            </div>
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">
-                            Sr#
-                        </th>
-                        <th scope="col">
-                            Batch
-                        </th>
-                        <th scope="col">
-                            Details
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">
-                            1
-                        </th>
-                        <td>
-                            Mark
-                        </td>
-                        <td>
-                            Otto
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            2
-                        </th>
-                        <td>
-                            Jacob
-                        </td>
-                        <td>
-                            Thornton
-                        </td>
+        }
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            3
-                        </th>
-                        <td>
-                            Larry
-                        </td>
-                        <td>
-                            the Bird
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <!--View Program-->
-        <div class="container formwidthfontcolor" id="ViewProgramId">
-            <div class="text-center">
-                <h1>
-                    View Program
-                </h1>
-            </div>
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">
-                            Sr#
-                        </th>
-                        <th scope="col">
-                            Program
-                        </th>
-                        <th scope="col">
-                            Details
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">
-                            1
-                        </th>
-                        <td>
-                            Mark
-                        </td>
-                        <td>
-                            Otto
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            2
-                        </th>
-                        <td>
-                            Jacob
-                        </td>
-                        <td>
-                            Thornton
-                        </td>
+            <!--View Batch-->
+            <div class="container formwidthfontcolor" id="ViewBatchId">
+                <div class="text-center">
+                    <h1>
+                        View Batch
+                    </h1>
+                </div>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">
+                                Sr#
+                            </th>
+                            <th scope="col">
+                                Batch
+                            </th>
+                            <th scope="col">
+                                Details
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">
+                                1
+                            </th>
+                            <td>
+                                Mark
+                            </td>
+                            <td>
+                                Otto
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                2
+                            </th>
+                            <td>
+                                Jacob
+                            </td>
+                            <td>
+                                Thornton
+                            </td>
 
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            3
-                        </th>
-                        <td>
-                            Larry
-                        </td>
-                        <td>
-                            the Bird
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <!--View Campus-->
-        <div class="container formwidthfontcolor" id="ViewCampusId">
-            <div class="text-center">
-                <h1>
-                    View Campus
-                </h1>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                3
+                            </th>
+                            <td>
+                                Larry
+                            </td>
+                            <td>
+                                the Bird
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">
-                            Sr#
-                        </th>
-                        <th scope="col">
-                            Campus
-                        </th>
-                        <th scope="col">
-                            Details
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">
-                            1
-                        </th>
-                        <td>
-                            Mark
-                        </td>
-                        <td>
-                            Otto
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            2
-                        </th>
-                        <td>
-                            Jacob
-                        </td>
-                        <td>
-                            Thornton
-                        </td>
+        }
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            3
-                        </th>
-                        <td>
-                            Larry
-                        </td>
-                        <td>
-                            the Bird
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            <!--View Program-->
+            <div class="container formwidthfontcolor" id="ViewProgramId">
+                <div class="text-center">
+                    <h1>
+                        View Program
+                    </h1>
+                </div>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">
+                                Sr#
+                            </th>
+                            <th scope="col">
+                                Program
+                            </th>
+                            <th scope="col">
+                                Details
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">
+                                1
+                            </th>
+                            <td>
+                                Mark
+                            </td>
+                            <td>
+                                Otto
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                2
+                            </th>
+                            <td>
+                                Jacob
+                            </td>
+                            <td>
+                                Thornton
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                3
+                            </th>
+                            <td>
+                                Larry
+                            </td>
+                            <td>
+                                the Bird
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <!--View Campus-->
+            <div class="container formwidthfontcolor" id="ViewCampusId">
+                <div class="text-center">
+                    <h1>
+                        View Campus
+                    </h1>
+                </div>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">
+                                Sr#
+                            </th>
+                            <th scope="col">
+                                Campus
+                            </th>
+                            <th scope="col">
+                                Details
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">
+                                1
+                            </th>
+                            <td>
+                                Mark
+                            </td>
+                            <td>
+                                Otto
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                2
+                            </th>
+                            <td>
+                                Jacob
+                            </td>
+                            <td>
+                                Thornton
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                3
+                            </th>
+                            <td>
+                                Larry
+                            </td>
+                            <td>
+                                the Bird
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        }
         <div class="row mt-3">
             <div class="col footerbackgroundcolor">
                 <div class="text-center mt-3 footertextcolor">

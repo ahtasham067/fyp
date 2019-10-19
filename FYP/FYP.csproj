@@ -140,9 +140,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AlliedField.cs" />
     <Compile Include="Models\Batch.cs" />
     <Compile Include="Models\Campu.cs" />
     <Compile Include="Models\Co_Supervisor.cs" />
+    <Compile Include="Models\Domain.cs" />
     <Compile Include="Models\Fyp_Idea.cs" />
     <Compile Include="Models\Internal_Evaluation.cs" />
     <Compile Include="Models\Internal_Evaluation_Student.cs" />
@@ -159,6 +161,10 @@
     <Compile Include="Models\Teacher_Login.cs" />
     <Compile Include="Models\Teacher_SignUp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AddLoginDetailVM.cs" />
+    <Compile Include="ViewModels\AddSemesterVM.cs" />
+    <Compile Include="ViewModels\DomainandAlliedFieldsVM.cs" />
+    <Compile Include="ViewModels\studentVM.cs" />
     <Compile Include="ViewModels\SupervisorandCosupervisorVM.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -238,21 +244,22 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\SignUp.cshtml" />
-    <Content Include="Views\Home\AddLoginDetail.cshtml" />
-    <Content Include="Views\Home\DomainandAlliedFields.cshtml" />
     <Content Include="Views\Home\ExternalEvaluation.cshtml" />
     <Content Include="Views\Home\InternalEvaluation.cshtml" />
     <Content Include="Views\Home\MeetingForm.cshtml" />
     <Content Include="Views\Home\ProposalEvaluationForm.cshtml" />
     <Content Include="Views\Home\SDDEvaluationForm.cshtml" />
     <Content Include="Views\Home\SRSEvaluationForm.cshtml" />
-    <Content Include="Views\Home\Student.cshtml" />
     <Content Include="Views\Home\SupervisorEvaluation.cshtml" />
     <Content Include="Views\Home\TeacherIndex.cshtml" />
     <Content Include="Views\Home\UpdateEvaluationMarks.cshtml" />
-    <Content Include="Views\Home\SupervisorandCosupervisor.cshtml" />
     <Content Include="Views\Home\SRSEvaluationForm1.cshtml" />
     <Content Include="Views\Home\Students.cshtml" />
+    <Content Include="Views\Home\AddLoginDetail.cshtml" />
+    <Content Include="Views\Home\DomainandAlliedFields.cshtml" />
+    <Content Include="Views\Home\AddSemester.cshtml" />
+    <Content Include="Views\Home\Student.cshtml" />
+    <Content Include="Views\Home\SupervisorandCosupervisor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -285,9 +292,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>61315</DevelopmentServerPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:61315/</IISUrl>
+          <IISUrl>http://localhost:65215/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -1,9 +1,11 @@
-﻿
+﻿@model FYP.ViewModels.DomainandAlliedFieldsVM
+
 @{
     Layout = null;
 }
 
 <!DOCTYPE html>
+
 <html>
 <head>
     <title>
@@ -37,7 +39,7 @@
     <div class="container backgroungcolor">
         <div class="row justify-content-md-center">
             <div class="cl">
-                
+
                 <img class="img-fluid" src="~/Images/cuis_bg5.png" />
             </div>
             <div class="col text-center mt-5">
@@ -86,217 +88,226 @@
         </div>
         <hr class="style1">
         <!--Domain-->
-        <div class="container formwidthfontcolor" id="AddDomainId">
-            <div class="text-center">
-                <h1>
-                    Add Domain
-                </h1>
-            </div>
-            <div class="form-group">
-                <label for="inputTitle">
-                    <span class="text-danger">
-                        *
-                    </span>
-                    Name
-                </label>
-                <input class="form-control" id="inputTitle" placeholder="*Domain Name" type="text">
-                </input>
-            </div>
-            <div class="form-row">
-                <div class="form-group text-right">
-                    <button class="btn btn-primary" type="submit">
-                        Add
-                    </button>
+        @using (Html.BeginForm("DomainandAlliedFields", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="container formwidthfontcolor" id="AddDomainId">
+                <div class="text-center">
+                    <h1>
+                        Add Domain
+                    </h1>
+                </div>
+                <div class="form-group">
+                    <label for="inputTitle">
+                        <span class="text-danger">
+                            *
+                        </span>
+                        Name
+                    </label>
+                    @Html.EditorFor(model => model.DomainName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DomainName, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-row">
+                    <div class="form-group text-right">
+                        <button class="btn btn-primary" type="submit">
+                            Add
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
         <!--Add Allied Field-->
-        <div class="container formwidthfontcolor" id="AddAlliedFieldId">
-            <div class="text-center">
-                <h1>
-                    Add Allied Field
-                </h1>
-            </div>
-            <div class="form-group">
-                <label for="inputTitle">
-                    <span class="text-danger">
-                        *
-                    </span>
-                    Name
-                </label>
-                <input class="form-control" id="inputTitle" placeholder="*AlliedField Name" type="text">
-                </input>
-            </div>
-            <div class="form-row">
-                <div class="form-group text-right">
-                    <button class="btn btn-primary" type="submit">
-                        Add
-                    </button>
+        @using (Html.BeginForm("DomainandAlliedFields", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="container formwidthfontcolor" id="AddAlliedFieldId">
+                <div class="text-center">
+                    <h1>
+                        Add Allied Field
+                    </h1>
+                </div>
+                <div class="form-group">
+                    <label for="inputTitle">
+                        <span class="text-danger">
+                            *
+                        </span>
+                        Name
+                    </label>
+                    @Html.EditorFor(model => model.AlliedFieldName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.AlliedFieldName, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-row">
+                    <div class="form-group text-right">
+                        <button class="btn btn-primary" type="submit">
+                            Add
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!--View Domain-->
-        <div class="container formwidthfontcolor" id="ViewDomainId">
-            <div class="text-center">
-                <h1>
-                    View Domain
-                </h1>
-            </div>
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">
-                            Sr#
-                        </th>
-                        <th scope="col">
-                            Domain
-                        </th>
-                        <th scope="col">
-                            Details
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">
-                            1
-                        </th>
-                        <td>
-                            Mark
-                        </td>
-                        <td>
-                            Otto
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            2
-                        </th>
-                        <td>
-                            Jacob
-                        </td>
-                        <td>
-                            Thornton
-                        </td>
+        }
+            <!--View Domain-->
+            <div class="container formwidthfontcolor" id="ViewDomainId">
+                <div class="text-center">
+                    <h1>
+                        View Domain
+                    </h1>
+                </div>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">
+                                Sr#
+                            </th>
+                            <th scope="col">
+                                Domain
+                            </th>
+                            <th scope="col">
+                                Details
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">
+                                1
+                            </th>
+                            <td>
+                                Mark
+                            </td>
+                            <td>
+                                Otto
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                2
+                            </th>
+                            <td>
+                                Jacob
+                            </td>
+                            <td>
+                                Thornton
+                            </td>
 
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            3
-                        </th>
-                        <td>
-                            Larry
-                        </td>
-                        <td>
-                            the Bird
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <!--View AlliedField-->
-        <div class="container formwidthfontcolor" id="ViewAlliedFieldId">
-            <div class="text-center">
-                <h1>
-                    View Allied Field
-                </h1>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                3
+                            </th>
+                            <td>
+                                Larry
+                            </td>
+                            <td>
+                                the Bird
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">
-                            Sr#
-                        </th>
-                        <th scope="col">
-                            Allied Field
-                        </th>
-                        <th scope="col">
-                            Details
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">
-                            1
-                        </th>
-                        <td>
-                            Mark
-                        </td>
-                        <td>
-                            Otto
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            2
-                        </th>
-                        <td>
-                            Jacob
-                        </td>
-                        <td>
-                            Thornton
-                        </td>
+            <!--View AlliedField-->
+            <div class="container formwidthfontcolor" id="ViewAlliedFieldId">
+                <div class="text-center">
+                    <h1>
+                        View Allied Field
+                    </h1>
+                </div>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">
+                                Sr#
+                            </th>
+                            <th scope="col">
+                                Allied Field
+                            </th>
+                            <th scope="col">
+                                Details
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">
+                                1
+                            </th>
+                            <td>
+                                Mark
+                            </td>
+                            <td>
+                                Otto
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                2
+                            </th>
+                            <td>
+                                Jacob
+                            </td>
+                            <td>
+                                Thornton
+                            </td>
 
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            3
-                        </th>
-                        <td>
-                            Larry
-                        </td>
-                        <td>
-                            the Bird
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="row mt-3">
-            <div class="col footerbackgroundcolor">
-                <div class="text-center mt-3 footertextcolor">
-                    <a href="#">
-                        FYPOnline,
-                    </a>
-                    Principal Seat © 2018-COMSATS ®
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                3
+                            </th>
+                            <td>
+                                Larry
+                            </td>
+                            <td>
+                                the Bird
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row mt-3">
+                <div class="col footerbackgroundcolor">
+                    <div class="text-center mt-3 footertextcolor">
+                        <a href="#">
+                            FYPOnline,
+                        </a>
+                        Principal Seat © 2018-COMSATS ®
+                    </div>
                 </div>
             </div>
+            </hr>
         </div>
-        </hr>
-    </div>
 </body>
+
 </html>
 <!-- Dropdown move to next page -->
 <script type="text/javascript">
     $(document).ready(function () {
-                $("#AddDomainId").show();
-                $("#AddAlliedFieldId").hide();
-                $("#ViewDomainId").hide();
-                $("#ViewAlliedFieldId").hide();
-            });
-            $(".AddDomain").click(function () {
-                $("#AddDomainId").show();
-                $("#AddAlliedFieldId").hide();
-                $("#ViewDomainId").hide();
-                $("#ViewAlliedFieldId").hide();
-            });
-            $(".AddAlliedField").click(function () {
-                $("#AddDomainId").hide();
-                $("#AddAlliedFieldId").show();
-                $("#ViewDomainId").hide();
-                $("#ViewAlliedFieldId").hide();
-            });
-            $(".ViewDomain").click(function () {
-                $("#AddDomainId").hide();
-                $("#AddAlliedFieldId").hide();
-                $("#ViewDomainId").show();
-                $("#ViewAlliedFieldId").hide();
-            });
-            $(".ViewAlliedField").click(function () {
-               $("#AddDomainId").hide();
-                $("#AddAlliedFieldId").hide();
-                $("#ViewDomainId").hide();
-                $("#ViewAlliedFieldId").show();
-            });
+        $("#AddDomainId").show();
+        $("#AddAlliedFieldId").hide();
+        $("#ViewDomainId").hide();
+        $("#ViewAlliedFieldId").hide();
+    });
+    $(".AddDomain").click(function () {
+        $("#AddDomainId").show();
+        $("#AddAlliedFieldId").hide();
+        $("#ViewDomainId").hide();
+        $("#ViewAlliedFieldId").hide();
+    });
+    $(".AddAlliedField").click(function () {
+        $("#AddDomainId").hide();
+        $("#AddAlliedFieldId").show();
+        $("#ViewDomainId").hide();
+        $("#ViewAlliedFieldId").hide();
+    });
+    $(".ViewDomain").click(function () {
+        $("#AddDomainId").hide();
+        $("#AddAlliedFieldId").hide();
+        $("#ViewDomainId").show();
+        $("#ViewAlliedFieldId").hide();
+    });
+    $(".ViewAlliedField").click(function () {
+        $("#AddDomainId").hide();
+        $("#AddAlliedFieldId").hide();
+        $("#ViewDomainId").hide();
+        $("#ViewAlliedFieldId").show();
+    });
 </script>

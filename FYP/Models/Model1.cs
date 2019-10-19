@@ -8,13 +8,15 @@ namespace FYP.Models
     public partial class Model1 : DbContext
     {
         public Model1()
-            : base("name=Model11")
+            : base("name=Model12")
         {
         }
 
+        public virtual DbSet<AlliedField> AlliedFields { get; set; }
         public virtual DbSet<Batch> Batches { get; set; }
         public virtual DbSet<Campu> Campus { get; set; }
         public virtual DbSet<Co_Supervisor> Co_Supervisor { get; set; }
+        public virtual DbSet<Domain> Domains { get; set; }
         public virtual DbSet<Fyp_Idea> Fyp_Idea { get; set; }
         public virtual DbSet<Internal_Evaluation> Internal_Evaluation { get; set; }
         public virtual DbSet<Internal_Evaluation_Student> Internal_Evaluation_Student { get; set; }
@@ -32,6 +34,10 @@ namespace FYP.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AlliedField>()
+                .Property(e => e.AlliedFieldName)
+                .IsUnicode(false);
+
             modelBuilder.Entity<Batch>()
                 .Property(e => e.BatchName)
                 .IsUnicode(false);
@@ -42,6 +48,10 @@ namespace FYP.Models
 
             modelBuilder.Entity<Co_Supervisor>()
                 .Property(e => e.CoSupervisorName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Domain>()
+                .Property(e => e.DomainName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Fyp_Idea>()
@@ -183,6 +193,10 @@ namespace FYP.Models
                 .Property(e => e.Email)
                 .IsUnicode(false);
         }
+
+        public System.Data.Entity.DbSet<FYP.ViewModels.DomainandAlliedFieldsVM> DomainandAlliedFieldsVMs { get; set; }
+
+        public System.Data.Entity.DbSet<FYP.ViewModels.AddSemesterVM> AddSemesterVMs { get; set; }
 
         public System.Data.Entity.DbSet<FYP.ViewModels.SupervisorandCosupervisorVM> SupervisorandCosupervisorVMs { get; set; }
     }

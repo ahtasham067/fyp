@@ -1,8 +1,8 @@
-﻿
+﻿@model FYP.Models.Project
+
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -105,14 +105,7 @@
                         <label for="inputSemester">
                             <span class="text-danger">*</span>Semester
                         </label>
-                        <select class="form-control" id="inputSemester">
-                            <option selected="">
-                                Choose...
-                            </option>
-                            <option>
-                                ...
-                            </option>
-                        </select>
+                        @Html.DropDownListFor(Model => Model.Semesters, ViewBag.semesterlist as SelectList, "Semeste", htmlAttributes: new { @class = "form-control" })
                     </div>
                 </div>
                 <!--Second member-->
@@ -135,14 +128,7 @@
                         <label for="inputSemester">
                             Semester
                         </label>
-                        <select class="form-control" id="inputSemester">
-                            <option selected="">
-                                Choose...
-                            </option>
-                            <option>
-                                ...
-                            </option>
-                        </select>
+                        @Html.DropDownListFor(Model => Model.Semesters, ViewBag.semesterlist as SelectList, "Semester", htmlAttributes: new { @class = "form-control" })
                     </div>
                 </div>
                 <!--Third member-->
@@ -165,14 +151,7 @@
                         <label for="inputSemester">
                             Semester
                         </label>
-                        <select class="form-control" id="inputSemester">
-                            <option selected="">
-                                Choose...
-                            </option>
-                            <option>
-                                ...
-                            </option>
-                        </select>
+                        @Html.DropDownListFor(Model => Model.Semesters, ViewBag.semesterlist as SelectList, "Semester", htmlAttributes: new { @class = "form-control" })
                     </div>
                 </div>
                 <!--Forth member-->
@@ -195,14 +174,7 @@
                         <label for="inputSemester">
                             Semester
                         </label>
-                        <select class="form-control" id="inputSemester">
-                            <option selected="">
-                                Choose...
-                            </option>
-                            <option>
-                                ...
-                            </option>
-                        </select>
+                        @Html.DropDownListFor(Model => Model.Semesters, ViewBag.semesterlist as SelectList, "Semester", htmlAttributes: new { @class = "form-control" })
                     </div>
                 </div>
                 <!--Project Title-->
@@ -219,27 +191,16 @@
                         <label for="inputSuperviser">
                             <span class="text-danger">*</span>Superviser
                         </label>
-                        <select class="form-control" id="inputSuperviser">
-                            <option selected="">
-                                Choose...
-                            </option>
-                            <option>
-                                ...
-                            </option>
-                        </select>
+                        @Html.DropDownListFor(Model => Model.Supervisors, ViewBag.semesterlist1 as SelectList, "Supervisor", htmlAttributes: new { @class = "form-control" })
+                        @*@Html.DropDownList("SupervisorName", new SelectList(ViewBag.data,"SupervisorName"))*@
+                        @*@Html.DropDownList("Supervisors", (IEnumerable<SelectListItem>)ViewBag.countrydrop, "Select country")*@
+                        @*@Html.DropDownListFor(Model => Model.Supervisors, ViewBag.countrydrop as SelectList, "Semester", htmlAttributes: new { @class = "form-control" })*@
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputCoSuperviser">
                             Co Superviser
                         </label>
-                        <select class="form-control" id="inputCoSuperviser">
-                            <option selected="">
-                                Choose...
-                            </option>
-                            <option>
-                                ...
-                            </option>
-                        </select>
+                        @Html.DropDownListFor(Model => Model.Co_Supervisor, ViewBag.semesterlist2 as SelectList, "Co Supervisor", htmlAttributes: new { @class = "form-control" })
                     </div>
                 </div>
                 <!--Summary-->
@@ -380,4 +341,3 @@
                 $("#Srs").hide();
             });
 </script>
-
