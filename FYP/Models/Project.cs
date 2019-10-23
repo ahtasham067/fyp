@@ -18,9 +18,9 @@ namespace FYP.Models
             Internal_Evaluation_Student = new HashSet<Internal_Evaluation_Student>();
             Project_Student = new HashSet<Project_Student>();
             Semesters = new HashSet<Semester>();
+            Supervisors = new HashSet<Supervisor>();
             Supervisor_Evaluation = new HashSet<Supervisor_Evaluation>();
             Supervisor_Evaluation_Student = new HashSet<Supervisor_Evaluation_Student>();
-            Supervisors = new HashSet<Supervisor>();
         }
 
         public int ProjectId { get; set; }
@@ -49,17 +49,71 @@ namespace FYP.Models
         [Required]
         public string ToolsAndTechnologies { get; set; }
 
-        public byte[] ProposalFile { get; set; }
+        [StringLength(500)]
+        public string ProposalFileType { get; set; }
 
-        public byte[] SrsFile { get; set; }
+        [Required]
+        [StringLength(500)]
+        public string ProposalFilePath { get; set; }
 
-        public byte[] SreFile { get; set; }
+        [Required]
+        [StringLength(500)]
+        public string ProposalFileName { get; set; }
 
-        public byte[] Code { get; set; }
+        [StringLength(500)]
+        public string SrsFileType { get; set; }
 
-        public byte[] Prototype { get; set; }
+        [Required]
+        [StringLength(500)]
+        public string SrsFilePath { get; set; }
 
-        public byte[] FinalReport { get; set; }
+        [Required]
+        [StringLength(500)]
+        public string SrsFileName { get; set; }
+
+        [StringLength(500)]
+        public string SreFileType { get; set; }
+
+        [Required]
+        [StringLength(500)]
+        public string SreFilePath { get; set; }
+
+        [Required]
+        [StringLength(500)]
+        public string SreFileName { get; set; }
+
+        [StringLength(500)]
+        public string CodeFileType { get; set; }
+
+        [Required]
+        [StringLength(500)]
+        public string CodeFilePath { get; set; }
+
+        [Required]
+        [StringLength(500)]
+        public string CodeFileName { get; set; }
+
+        [StringLength(500)]
+        public string PrototypeFileType { get; set; }
+
+        [Required]
+        [StringLength(500)]
+        public string PrototypeFilePath { get; set; }
+
+        [Required]
+        [StringLength(500)]
+        public string PrototypeFileName { get; set; }
+
+        [StringLength(500)]
+        public string FinalReportFileType { get; set; }
+
+        [Required]
+        [StringLength(500)]
+        public string FinalReportFilePath { get; set; }
+
+        [Required]
+        [StringLength(500)]
+        public string FinalReportFileName { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Co_Supervisor> Co_Supervisor { get; set; }
@@ -80,12 +134,12 @@ namespace FYP.Models
         public virtual ICollection<Semester> Semesters { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Supervisor> Supervisors { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Supervisor_Evaluation> Supervisor_Evaluation { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Supervisor_Evaluation_Student> Supervisor_Evaluation_Student { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Supervisor> Supervisors { get; set; }
     }
 }

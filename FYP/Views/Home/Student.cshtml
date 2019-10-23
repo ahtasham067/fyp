@@ -1,8 +1,9 @@
-﻿@model FYP.Models.Project
+﻿@model FYP.ViewModels.StudentVM
 
 @{
     Layout = null;
 }
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,13 +54,13 @@
                         <a class="dropdown-item srslink" href="#">
                             SRS
                         </a>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item srelink" href="#">
                             SRE
                         </a>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item Codelink" href="#">
                             Code
                         </a>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item Prototypelink" href="#">
                             Prototype
                         </a>
                         <a class="dropdown-item FinalReportLink" href="#">
@@ -73,238 +74,396 @@
             </div>
         </div>
         <hr class="style1">
-        <div class="container rounded formwidthfontcolor" id="Proposal">
-            <form>
-                <div class="text-center">
-                    <h1>Proposal</h1>
-                </div>
-                <div class="form-row">
-                    <label>
-                        <strong>
-                            Team Members:
-                        </strong>
-                    </label>
-                </div>
-                <!--First member-->
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="inputCity">
-                            <span class="text-danger">*</span> RegNo
+        @using (Html.BeginForm("Student", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="container rounded formwidthfontcolor" id="Proposal">
+                <form>
+                    <div class="text-center">
+                        <h1>Proposal</h1>
+                    </div>
+                    <div class="form-row">
+                        <label>
+                            <strong>
+                                Team Members:
+                            </strong>
                         </label>
-                        <input class="form-control" id="inputCity" placeholder="*RegNo" type="text">
-                        </input>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputName">
-                            <span class="text-danger">*</span>Name
-                        </label>
-                        <input class="form-control" id="inputName" placeholder="*Name" type="text">
-                        </input>
+                    <!--First member-->
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="inputCity">
+                                <span class="text-danger">*</span> RegNo
+                            </label>
+                            <input class="form-control" id="inputCity" placeholder="*RegNo" type="text">
+                            </input>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputName">
+                                <span class="text-danger">*</span>Name
+                            </label>
+                            <input class="form-control" id="inputName" placeholder="*Name" type="text">
+                            </input>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputSemester">
+                                <span class="text-danger">*</span>Semester
+                            </label>
+                            @Html.DropDownListFor(Model => Model.Semester, ViewBag.semesterlist as SelectList, "Semester", htmlAttributes: new { @class = "form-control" })
+                        </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputSemester">
-                            <span class="text-danger">*</span>Semester
-                        </label>
-                        @Html.DropDownListFor(Model => Model.Semesters, ViewBag.semesterlist as SelectList, "Semeste", htmlAttributes: new { @class = "form-control" })
-                    </div>
-                </div>
-                <!--Second member-->
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="inputCity">
-                            RegNo
-                        </label>
-                        <input class="form-control" id="inputCity" placeholder="*RegNo" type="text">
-                        </input>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputName">
-                            Name
-                        </label>
-                        <input class="form-control" id="inputName" placeholder="*Name" type="text">
-                        </input>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputSemester">
-                            Semester
-                        </label>
-                        @Html.DropDownListFor(Model => Model.Semesters, ViewBag.semesterlist as SelectList, "Semester", htmlAttributes: new { @class = "form-control" })
-                    </div>
-                </div>
-                <!--Third member-->
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="inputCity">
-                            RegNo
-                        </label>
-                        <input class="form-control" id="inputCity" placeholder="*RegNo" type="text">
-                        </input>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputName">
-                            Name
-                        </label>
-                        <input class="form-control" id="inputName" placeholder="*Name" type="text">
-                        </input>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputSemester">
-                            Semester
-                        </label>
-                        @Html.DropDownListFor(Model => Model.Semesters, ViewBag.semesterlist as SelectList, "Semester", htmlAttributes: new { @class = "form-control" })
-                    </div>
-                </div>
-                <!--Forth member-->
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="inputCity">
-                            RegNo
-                        </label>
-                        <input class="form-control" id="inputCity" placeholder="*RegNo" type="text">
-                        </input>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputName">
-                            Name
-                        </label>
-                        <input class="form-control" id="inputName" placeholder="*Name" type="text">
-                        </input>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputSemester">
-                            Semester
-                        </label>
-                        @Html.DropDownListFor(Model => Model.Semesters, ViewBag.semesterlist as SelectList, "Semester", htmlAttributes: new { @class = "form-control" })
-                    </div>
-                </div>
-                <!--Project Title-->
-                <div class="form-group">
-                    <label for="inputTitle">
-                        <span class="text-danger">*</span>Title
-                    </label>
-                    <input class="form-control" id="inputTitle" placeholder="*Project Title" type="text">
-                    </input>
-                </div>
-                <!--SuperViser and CoSuperviser -->
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputSuperviser">
-                            <span class="text-danger">*</span>Superviser
-                        </label>
-                        @Html.DropDownListFor(Model => Model.Supervisors, ViewBag.semesterlist1 as SelectList, "Supervisor", htmlAttributes: new { @class = "form-control" })
-                        @*@Html.DropDownList("SupervisorName", new SelectList(ViewBag.data,"SupervisorName"))*@
-                        @*@Html.DropDownList("Supervisors", (IEnumerable<SelectListItem>)ViewBag.countrydrop, "Select country")*@
-                        @*@Html.DropDownListFor(Model => Model.Supervisors, ViewBag.countrydrop as SelectList, "Semester", htmlAttributes: new { @class = "form-control" })*@
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="inputCoSuperviser">
-                            Co Superviser
-                        </label>
-                        @Html.DropDownListFor(Model => Model.Co_Supervisor, ViewBag.semesterlist2 as SelectList, "Co Supervisor", htmlAttributes: new { @class = "form-control" })
-                    </div>
-                </div>
-                <!--Summary-->
-                <div class="form-group">
-                    <label for="inputSummery/Abstract ">
-                        <span class="text-danger">*</span> Summery / Abstract (100 To 300 Words)
-                    </label>
-                    <textarea class="form-control" id="Summery/Abstract" name="text" rows="5">
-                    </textarea>
-                </div>
-                <!--Objective-->
-                <div class="form-group">
-                    <label for="inputObjective">
-                        <span class="text-danger">*</span> Objective (1 To 50 Words)
-                    </label>
-                    <textarea class="form-control" id="Objective" name="text" rows="4">
-                    </textarea>
-                </div>
-                <!--Scope-->
-                <div class="form-group">
-                    <label for="inputObjective">
-                        <span class="text-danger">*</span> Scope (100 Words)
-                    </label>
-                    <textarea class="form-control" id="Objective" name="text" rows="4">
-                    </textarea>
-                </div>
-                <!--Tools and Technologies-->
-                <div class="form-group">
-                    <label for="inputObjective">
-                        <span class="text-danger">*</span>Tools and Technologies
-                    </label>
-                    <textarea class="form-control" id="Objective" name="text" rows="4">
-                    </textarea>
-                </div>
-                <!--Upload File-->
-                <div class="form-group">
-                    <label for="exampleFormControlFile1">
-                        <span class="text-danger">*</span> File Type(.Doc/.ppt/.pdf)
-                    </label>
-                    <input class="form-control-file" id="exampleFormControlFile1" type="file">
-                    </input>
-                </div>
-                <!--Buttons Save and Documents Latter-->
-                <div class="form-row">
-                    <div class="form-group col-6">
-                        <button class="btn btn-primary" type="Documents">
-                            Documents
-                        </button>
-                    </div>
-                    <div class="form-group col-6 text-right">
-                        <button class="btn btn-primary" type="Documents">
-                            Save/DocumentsLatter
-                        </button>
-                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="inputCity">
+                                <span class="text-danger">*</span> Email
+                            </label>
+                            <input class="form-control" id="inputCity" placeholder="*RegNo" type="text">
+                            </input>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputName">
+                                <span class="text-danger">*</span>Contact No
+                            </label>
+                            <input class="form-control" id="inputName" placeholder="*Name" type="text">
+                            </input>
+                        </div>
 
-                </div>
-            </form>
-        </div>
+                    </div>
+                    <!--Second member-->
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="inputCity">
+                                RegNo
+                            </label>
+                            <input class="form-control" id="inputCity" placeholder="*RegNo" type="text">
+                            </input>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputName">
+                                Name
+                            </label>
+                            <input class="form-control" id="inputName" placeholder="*Name" type="text">
+                            </input>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputSemester">
+                                Semester
+                            </label>
+                            @Html.DropDownListFor(Model => Model.Semester, ViewBag.semesterlist as SelectList, "Semester", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="inputCity">
+                                <span class="text-danger">*</span> Email
+                            </label>
+                            <input class="form-control" id="inputCity" placeholder="*RegNo" type="text">
+                            </input>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputName">
+                                <span class="text-danger">*</span>Contact No
+                            </label>
+                            <input class="form-control" id="inputName" placeholder="*Name" type="text">
+                            </input>
+                        </div>
+
+                    </div>
+                    <!--Third member-->
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="inputCity">
+                                RegNo
+                            </label>
+                            <input class="form-control" id="inputCity" placeholder="*RegNo" type="text">
+                            </input>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputName">
+                                Name
+                            </label>
+                            <input class="form-control" id="inputName" placeholder="*Name" type="text">
+                            </input>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputSemester">
+                                Semester
+                            </label>
+                            @Html.DropDownListFor(Model => Model.Semester, ViewBag.semesterlist as SelectList, "Semester", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="inputCity">
+                                <span class="text-danger">*</span> Email
+                            </label>
+                            <input class="form-control" id="inputCity" placeholder="*RegNo" type="text">
+                            </input>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputName">
+                                <span class="text-danger">*</span>Contact No
+                            </label>
+                            <input class="form-control" id="inputName" placeholder="*Name" type="text">
+                            </input>
+                        </div>
+
+                    </div>
+                    <!--Forth member-->
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="inputCity">
+                                RegNo
+                            </label>
+                            <input class="form-control" id="inputCity" placeholder="*RegNo" type="text">
+                            </input>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputName">
+                                Name
+                            </label>
+                            <input class="form-control" id="inputName" placeholder="*Name" type="text">
+                            </input>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputSemester">
+                                Semester
+                            </label>
+                            @Html.DropDownListFor(Model => Model.Semester, ViewBag.semesterlist as SelectList, "Semester", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="inputCity">
+                                <span class="text-danger">*</span> Email
+                            </label>
+                            <input class="form-control" id="inputCity" placeholder="*RegNo" type="text">
+                            </input>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputName">
+                                <span class="text-danger">*</span>Contact No
+                            </label>
+                            <input class="form-control" id="inputName" placeholder="*Name" type="text">
+                            </input>
+                        </div>
+
+                    </div>
+                    <!--Project Title-->
+                    <div class="form-group">
+                        <label for="inputTitle">
+                            <span class="text-danger">*</span>Title
+                        </label>
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+                    <!--SuperViser and CoSuperviser -->
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputSuperviser">
+                                <span class="text-danger">*</span>Superviser
+                            </label>
+                            @Html.DropDownListFor(Model => Model.Supervisor, ViewBag.semesterlist1 as SelectList, "Supervisor", htmlAttributes: new { @class = "form-control" })
+
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputCoSuperviser">
+                                Co Superviser
+                            </label>
+                            @Html.DropDownListFor(Model => Model.CoSupervisor, ViewBag.semesterlist2 as SelectList, "Co Supervisor", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <!--Summary-->
+                    <div class="form-group">
+                        <label for="inputSummery/Abstract ">
+                            <span class="text-danger">*</span> Summery / Abstract (100 To 300 Words)
+                        </label>
+                        @Html.TextAreaFor(model => model.Summary, new { cols = 30, rows = 5, @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Summary, "", new { @class = "text-danger" })
+                    </div>
+                    <!--Objective-->
+                    <div class="form-group">
+                        <label for="inputObjective">
+                            <span class="text-danger">*</span> Objective (1 To 50 Words)
+                        </label>
+                        @Html.TextAreaFor(model => model.Objective, new { cols = 30, rows = 5, @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Objective, "", new { @class = "text-danger" })
+                    </div>
+                    <!--Scope-->
+                    <div class="form-group">
+                        <label for="inputObjective">
+                            <span class="text-danger">*</span> Scope (100 Words)
+                        </label>
+                        @Html.TextAreaFor(model => model.Scope, new { cols = 30, rows = 5, @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Scope, "", new { @class = "text-danger" })
+                    </div>
+                    <!--Tools and Technologies-->
+                    <div class="form-group">
+                        <label for="inputObjective">
+                            <span class="text-danger">*</span>Tools and Technologies
+                        </label>
+                        @Html.TextAreaFor(model => model.ToolsAndTechnologies, new { cols = 30, rows = 5, @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ToolsAndTechnologies, "", new { @class = "text-danger" })
+                    </div>
+                    <!--Upload File-->
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">
+                            <span class="text-danger">*</span> File Type(.Doc/.ppt/.pdf)
+                            </label>
+                            
+                            @Html.TextBox("ProposalFile", "", new { Type = "file", @class = "form-control" })<br />
+                    </div>
+                    <!--Buttons Save and Documents Latter-->
+                    <div class="form-row">
+                        <div class="form-group col-6">
+                            <button class="btn btn-primary" type="submit">
+                                Submit
+                            </button>
+                        </div>
+                        <div class="form-group col-6 text-right">
+                            <button class="btn btn-primary" type="Documents">
+                                Save/DocumentsLatter
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        }
         <!--Srs Portion-->
-        <div class="container formwidthfontcolor" id="Srs">
-            <form>
-                <div class="text-center">
-                    <h1>SRS</h1>
-                </div>
-                <!--Upload File-->
-                <div class="form-group">
-                    <label for="exampleFormControlFile1">
-                        File Type(.Doc/.ppt/.pdf)
-                    </label>
-                    <input class="form-control-file" id="exampleFormControlFile1" type="file">
-                    </input>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <button class="btn btn-primary" type="Documents">
-                            Documents
-                        </button>
+        @using (Html.BeginForm("Student", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="container formwidthfontcolor" id="Srs">
+                <form>
+                    <div class="text-center">
+                        <h1>SRS</h1>
                     </div>
-                </div>
-            </form>
-        </div>
+                    <!--Upload File-->
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">
+                            File Type(.Doc/.ppt/.pdf)
+                        </label>
+                       
+                        @Html.TextBox("SrsFile", "", new { Type = "file", @class = "form-control" })<br />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <button class="btn btn-primary" type="submit">
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        }
+        <!--Sre Portion-->
+        @using (Html.BeginForm("Student", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="container formwidthfontcolor" id="Sre">
+                <form>
+                    <div class="text-center">
+                        <h1>SRE</h1>
+                    </div>
+                    <!--Upload File-->
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">
+                            File Type(.Doc/.ppt/.pdf)
+                        </label>
+                        
+                        @Html.TextBox("SreFile", "", new { Type = "file", @class = "form-control" })<br />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <button class="btn btn-primary" type="submit">
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        }
+        <!--Srs Portion-->
+        @using (Html.BeginForm("Student", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="container formwidthfontcolor" id="Code">
+                <form>
+                    <div class="text-center">
+                        <h1>CODE</h1>
+                    </div>
+                    <!--Upload File-->
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">
+                            File Type(.Doc/.ppt/.pdf)
+                        </label>
+                        
+                        @Html.TextBox("Code", "", new { Type = "file", @class = "form-control" })<br />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <button class="btn btn-primary" type="submit">
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        }
+        <!--Srs Portion-->
+        @using (Html.BeginForm("Student", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="container formwidthfontcolor" id="Prototype">
+                <form>
+                    <div class="text-center">
+                        <h1>Prototype</h1>
+                    </div>
+                    <!--Upload File-->
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">
+                            File Type(.Doc/.ppt/.pdf)
+                        </label>
+                       
+                        @Html.TextBox("Prototype", "", new { Type = "file", @class = "form-control" })<br />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <button class="btn btn-primary" type="submit">
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        }
         <!--Final Report-->
-        <div class="container formwidthfontcolor" id="FinalReport">
-            <form>
-                <div class="text-center">
-                    <h1>Final Report</h1>
-                </div>
-                <!--Upload File-->
-                <div class="form-group">
-                    <label for="exampleFormControlFile1">
-                        File Type(.Doc/.ppt/.pdf)
-                    </label>
-                    <input class="form-control-file" id="exampleFormControlFile1" type="file">
-                    </input>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <button class="btn btn-primary" type="Submit">
-                            Submit
-                        </button>
+        @using (Html.BeginForm("Student", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="container formwidthfontcolor" id="FinalReport">
+                <form>
+                    <div class="text-center">
+                        <h1>Final Report</h1>
                     </div>
-                </div>
-            </form>
-        </div>
+                    <!--Upload File-->
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">
+                            File Type(.Doc/.ppt/.pdf)
+                        </label>
+                        @Html.TextBox("FinalReport", "", new { Type = "file", @class = "form-control" })<br />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <button class="btn btn-primary" type="Submit">
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        }
         <div class="row mt-3">
             <div class="col footerbackgroundcolor">
                 <div class="text-center mt-3 footertextcolor">
@@ -320,24 +479,60 @@
 </html>
 <script type="text/javascript">
     $(document).ready(function () {
-                $("#Proposal").show();
-                $("#Srs").hide();
-                $("#FinalReport").hide();
+        $("#Proposal").show();
+        $("#Srs").hide();
+        $("#Sre").hide();
+        $("#Code").hide();
+        $("#Prototype").hide();
+        $("#FinalReport").hide();
             });
 
             $(".proposallink").click(function () {
                 $("#Proposal").show();
                 $("#Srs").hide();
+                $("#Sre").hide();
+                $("#Code").hide();
+                $("#Prototype").hide();
                 $("#FinalReport").hide();
             });
-            $(".srslink").click(function () {
-                $("#Srs").show();
-                $("#Proposal").hide();
+    $(".srslink").click(function () {
+        $("#Proposal").hide();
+        $("#Srs").show();
+                $("#Sre").hide();
+                $("#Code").hide();
+                $("#Prototype").hide();
                 $("#FinalReport").hide();
-            });
+    });
+    $(".srelink").click(function () {
+        $("#Proposal").hide();
+        $("#Srs").hide();
+        $("#Sre").show();
+        $("#Code").hide();
+        $("#Prototype").hide();
+        $("#FinalReport").hide();
+    });
+    $(".Codelink").click(function () {
+        $("#Proposal").hide();
+        $("#Srs").hide();
+        $("#Sre").hide();
+        $("#Code").show();
+        $("#Prototype").hide();
+        $("#FinalReport").hide();
+    });
+    $(".Prototypelink").click(function () {
+        $("#Proposal").hide();
+        $("#Srs").hide();
+        $("#Sre").hide();
+        $("#Code").hide();
+        $("#Prototype").show();
+        $("#FinalReport").hide();
+    });
             $(".FinalReportLink").click(function () {
-                $("#FinalReport").show();
                 $("#Proposal").hide();
                 $("#Srs").hide();
+                $("#Sre").hide();
+                $("#Code").hide();
+                $("#Prototype").hide();
+                $("#FinalReport").show();
             });
 </script>

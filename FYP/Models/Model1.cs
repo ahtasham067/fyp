@@ -8,7 +8,7 @@ namespace FYP.Models
     public partial class Model1 : DbContext
     {
         public Model1()
-            : base("name=Model12")
+            : base("name=Model15")
         {
         }
 
@@ -96,6 +96,78 @@ namespace FYP.Models
 
             modelBuilder.Entity<Project>()
                 .Property(e => e.ToolsAndTechnologies)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Project>()
+                .Property(e => e.ProposalFileType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Project>()
+                .Property(e => e.ProposalFilePath)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Project>()
+                .Property(e => e.ProposalFileName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Project>()
+                .Property(e => e.SrsFileType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Project>()
+                .Property(e => e.SrsFilePath)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Project>()
+                .Property(e => e.SrsFileName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Project>()
+                .Property(e => e.SreFileType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Project>()
+                .Property(e => e.SreFilePath)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Project>()
+                .Property(e => e.SreFileName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Project>()
+                .Property(e => e.CodeFileType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Project>()
+                .Property(e => e.CodeFilePath)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Project>()
+                .Property(e => e.CodeFileName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Project>()
+                .Property(e => e.PrototypeFileType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Project>()
+                .Property(e => e.PrototypeFilePath)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Project>()
+                .Property(e => e.PrototypeFileName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Project>()
+                .Property(e => e.FinalReportFileType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Project>()
+                .Property(e => e.FinalReportFilePath)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Project>()
+                .Property(e => e.FinalReportFileName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Project>()
@@ -193,11 +265,5 @@ namespace FYP.Models
                 .Property(e => e.Email)
                 .IsUnicode(false);
         }
-
-        public System.Data.Entity.DbSet<FYP.ViewModels.DomainandAlliedFieldsVM> DomainandAlliedFieldsVMs { get; set; }
-
-        public System.Data.Entity.DbSet<FYP.ViewModels.AddSemesterVM> AddSemesterVMs { get; set; }
-
-        public System.Data.Entity.DbSet<FYP.ViewModels.SupervisorandCosupervisorVM> SupervisorandCosupervisorVMs { get; set; }
     }
 }

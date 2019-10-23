@@ -164,7 +164,7 @@
     <Compile Include="ViewModels\AddLoginDetailVM.cs" />
     <Compile Include="ViewModels\AddSemesterVM.cs" />
     <Compile Include="ViewModels\DomainandAlliedFieldsVM.cs" />
-    <Compile Include="ViewModels\studentVM.cs" />
+    <Compile Include="ViewModels\StudentVM.cs" />
     <Compile Include="ViewModels\SupervisorandCosupervisorVM.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -258,11 +258,15 @@
     <Content Include="Views\Home\AddLoginDetail.cshtml" />
     <Content Include="Views\Home\DomainandAlliedFields.cshtml" />
     <Content Include="Views\Home\AddSemester.cshtml" />
-    <Content Include="Views\Home\Student.cshtml" />
     <Content Include="Views\Home\SupervisorandCosupervisor.cshtml" />
+    <Content Include="Views\Home\Student.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ProposalFiles\" />
+    <Folder Include="SreFiles\" />
+    <Folder Include="SrsFiles\" />
+    <Folder Include="videofiles\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -294,7 +298,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:65215/</IISUrl>
+          <IISUrl>http://localhost:65342/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

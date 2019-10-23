@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -175,99 +176,156 @@ namespace FYP.Controllers
             return View();
 
         }
-        [HttpGet]
-        public ActionResult Students()
-        {
-            string mainconn = ConfigurationManager.ConnectionStrings["Model1"].ConnectionString;
-            SqlConnection sqlconn = new SqlConnection(mainconn);
-            String sql = "SELECT SupervisorName FROM [dbo].[Supervisor]";
-            SqlCommand cmd = new SqlCommand(sql, sqlconn);
+        //[HttpGet]
+        //public ActionResult Students()
+        //{
+        //    string mainconn = ConfigurationManager.ConnectionStrings["Model1"].ConnectionString;
+        //    SqlConnection sqlconn = new SqlConnection(mainconn);
+        //    String sql = "SELECT SupervisorName FROM [dbo].[Supervisor]";
+        //    SqlCommand cmd = new SqlCommand(sql, sqlconn);
 
-            var model = new List<Supervisor>();
-            using (SqlConnection conn = new SqlConnection(mainconn))
-            {
-                sqlconn.Open();
-                SqlDataReader rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    var student = new Supervisor();
-                    student.SupervisorName = rdr["SupervisorName"].ToString();
-            model.Add(student);
-                }
-                sqlconn.Close();
+        //    var model = new List<Supervisor>();
+        //    using (SqlConnection conn = new SqlConnection(mainconn))
+        //    {
+        //        sqlconn.Open();
+        //        SqlDataReader rdr = cmd.ExecuteReader();
+        //        while (rdr.Read())
+        //        {
+        //            var student = new Supervisor();
+        //            student.SupervisorName = rdr["SupervisorName"].ToString();
+        //    model.Add(student);
+        //        }
+        //        sqlconn.Close();
 
-            }
+        //    }
 
-            return View(model);
-        }
+        //    return View(model);
+        //}
         [HttpGet]
         public ActionResult Student()
         {
-            
+
             var getitemlist = db.Semesters.ToList();
-            SelectList list = new SelectList(getitemlist, "SemesterNumber", "SemesterNumber");
+            SelectList list = new SelectList(getitemlist, "SemesterId", "SemesterNumber");
             ViewBag.semesterlist = list;
 
             var getitemlist1 = db.Supervisors.ToList();
-            SelectList list1 = new SelectList(getitemlist1, "SupervisorName", "SupervisorName");
+            SelectList list1 = new SelectList(getitemlist1, "SupervisorId", "SupervisorName");
             ViewBag.semesterlist1 = list1;
 
 
             var getitemlist2 = db.Co_Supervisor.ToList();
-            SelectList list2 = new SelectList(getitemlist2, "CoSupervisorName", "CoSupervisorName");
+            SelectList list2 = new SelectList(getitemlist2, "CoSupervisorId", "CoSupervisorName");
             ViewBag.semesterlist2 = list2;
 
-            //List<Supervisor> count0 = new List<Supervisor>();
-            //var count1 = db.Supervisors.Count();
-            //count0 = count1
-            //List<SelectListItem> item8 = new List<SelectListItem>();
-            //foreach (var c in count0)
-            //{
-            //    item8.Add(new SelectListItem
-            //    {
-            //        Text = c.country,
-            //        Value = c.countryid.ToString()
-            //    });
-            //}
 
-            //ViewBag.countrydrop = item8;
-            var items = db.Supervisors.ToList();
-            if (items != null)
-            {
-                ViewBag.data = items;
-            }
-
-            // Model1 semesterobj1 = new Model1();
-
-            //var items = semesterobj1.Supervisors.ToList();
-            //Model1 semesterobj1 = new Model1();
-            List<Supervisor> count = new List<Supervisor>();
-            count = items;
-
-            //List<Companyregister> coun = new List<Companyregister>();
-            //coun = ds.getcountry();
-
-            List<SelectListItem> item8 = new List<SelectListItem>();
-            foreach (var c in count)
-            {
-                item8.Add(new SelectListItem
-                {
-
-                    Value = c.SupervisorName
-                });
-            }
-
-            ViewBag.countrydrop = item8;
-            //Model1 semesterobj1 = new Model1();
-            //var getitemlist1 = semesterobj1.Supervisors.ToList();
-            //SelectList list1 = new SelectList(getitemlist1, "SupervisorName", "SupervisorName");
-            //ViewBag.semesterlist = list1;
             return View();
-            //Model1 Supervisorobj = new Model1();
-            //var getitemlist1 = Supervisorobj.Supervisors.ToList();
-            //SelectList list1 = new SelectList(getitemlist1, "SupervisorName", "SupervisorName");
-            //ViewBag.Supervisorlist = list1;
-            //return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Student(StudentVM obj, HttpPostedFileBase ProposalFile, HttpPostedFileBase SrsFile, HttpPostedFileBase SreFile, HttpPostedFileBase Code, HttpPostedFileBase Prototype, HttpPostedFileBase FinalReport)
+        {
+            if (ProposalFile != null)
+            {
+                    string filename = Path.GetFileName(ProposalFile.FileName);
+                    ProposalFile.SaveAs(Server.MapPath("/ProposalFiles/" + filename));
+                    string mainconn = ConfigurationManager.ConnectionStrings["Model15"].ConnectionString;
+                    SqlConnection sqlconn = new SqlConnection(mainconn);
+                    string sqlquery1 = "insert into [dbo].[Project] (Title,Supervisor,CoSupervisor,Summary,Objective,Scope,ToolsAndTechnologies,ProposalFileType,ProposalFilePath,ProposalFileName) values (@Title,@Supervisor,@CoSupervisor,@Summary,@Objective,@Scope,@ToolsAndTechnologies,@ProposalFileType,@ProposalFilePath,@ProposalFileName)";
+                    SqlCommand sqlcomm = new SqlCommand(sqlquery1, sqlconn);
+                    byte[] bytes;
+                    using (BinaryReader br = new BinaryReader(ProposalFile.InputStream))
+                    {
+                        bytes = br.ReadBytes(ProposalFile.ContentLength);
+
+                    }
+                    sqlconn.Open();
+                    sqlcomm.Parameters.AddWithValue("@ProposalFileName",filename);
+                    sqlcomm.Parameters.AddWithValue("@Title", obj.Title);
+                    sqlcomm.Parameters.AddWithValue("@Supervisor", obj.Supervisor);
+                    sqlcomm.Parameters.AddWithValue("@CoSupervisor", obj.CoSupervisor);
+                    sqlcomm.Parameters.AddWithValue("@Summary", obj.Summary);
+                    sqlcomm.Parameters.AddWithValue("@Objective", obj.Objective);
+                    sqlcomm.Parameters.AddWithValue("@Scope", obj.Scope);
+                    sqlcomm.Parameters.AddWithValue("@ToolsAndTechnologies", obj.ToolsAndTechnologies);
+                    sqlcomm.Parameters.AddWithValue("@ProposalFileType", ProposalFile.ContentType);
+                    sqlcomm.Parameters.AddWithValue("@ProposalFilePath", @"/ProposalFiles/" + filename);
+                    sqlcomm.ExecuteNonQuery();
+                    
+                    StudentVM vm = new StudentVM();
+                    var projectid4 = obj.ProjectId;
+
+
+                    sqlconn.Close();
+                    Project p = new Project();
+                    var ProjectId3 = p.ProjectId;
+            }
+            else
+            {
+                if (SrsFile != null)
+                {
+                    string filename = Path.GetFileName(SrsFile.FileName);
+                    SrsFile.SaveAs(Server.MapPath("/SrsFiles/" + filename));
+                    string mainconn = ConfigurationManager.ConnectionStrings["Model15"].ConnectionString;
+                    SqlConnection sqlconn = new SqlConnection(mainconn);
+                    string sqlquery1 = "UPDATE [dbo].[Project] SET SrsFileType=@SrsFileType,SrsFilePath=@SrsFilePath,SrsFileName=@SrsFileName WHERE ProjectId=@ProjectId";
+                    SqlCommand sqlcomm = new SqlCommand(sqlquery1, sqlconn);
+                    byte[] bytes;
+                    using (BinaryReader br = new BinaryReader(SrsFile.InputStream))
+                    {
+                        bytes = br.ReadBytes(SrsFile.ContentLength);
+
+                    }
+                    sqlconn.Open();
+                    sqlcomm.Parameters.AddWithValue("@SrsFileName", filename);
+                    sqlcomm.Parameters.AddWithValue("@SrsFileType", SrsFile.ContentType);
+                    sqlcomm.Parameters.AddWithValue("@ProjectId", 1);
+                    sqlcomm.Parameters.AddWithValue("@SrsFilePath", @"/SrsFiles/" + filename);
+                    sqlcomm.ExecuteNonQuery();
+                    sqlconn.Close();
+                }
+                else
+                {
+                    if (SreFile != null)
+                    {
+                        var supportedTypes = new[] { "zip", "rar"};
+                        var fileExt = System.IO.Path.GetExtension(SreFile.FileName).Substring(1);
+                        //if (!supportedTypes.Contains(fileExt))
+                        //{
+                        //    ErrorMessage = "File Extension Is InValid - Only Upload WORD/PDF/EXCEL/TXT File";
+                        //    return ErrorMessage;
+                        //}
+
+                        if (supportedTypes.Contains(fileExt))
+                        {
+
+                            string filename = Path.GetFileName(SreFile.FileName);
+                            SreFile.SaveAs(Server.MapPath("/SreFiles/" + filename));
+                            string mainconn = ConfigurationManager.ConnectionStrings["Model15"].ConnectionString;
+                            SqlConnection sqlconn = new SqlConnection(mainconn);
+                            string sqlquery1 = "UPDATE [dbo].[Project] SET SreFileType=@SreFileType,SreFilePath=@SreFilePath,SreFileName=@SreFileName WHERE ProjectId=@ProjectId";
+                            SqlCommand sqlcomm = new SqlCommand(sqlquery1, sqlconn);
+                            byte[] bytes;
+                            using (BinaryReader br = new BinaryReader(SreFile.InputStream))
+                            {
+                                bytes = br.ReadBytes(SreFile.ContentLength);
+
+                            }
+                            sqlconn.Open();
+                            sqlcomm.Parameters.AddWithValue("@SreFileName", filename);
+                            sqlcomm.Parameters.AddWithValue("@SreFileType", SreFile.ContentType);
+                            sqlcomm.Parameters.AddWithValue("@ProjectId", 1);
+                            sqlcomm.Parameters.AddWithValue("@SreFilePath", @"/SreFiles/" + filename);
+                            sqlcomm.ExecuteNonQuery();
+                            sqlconn.Close();
+                        }
+                    }
+                }
+
+            }
+            
+
+            return RedirectToAction("Student");
         }
         [HttpGet]
         public ActionResult SupervisorandCosupervisor()
