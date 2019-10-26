@@ -20,7 +20,7 @@ namespace FYP.Models
 
         [Required]
         [StringLength(50)]
-        public string FullName { get; set; }
+        public string TFullName { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -28,11 +28,15 @@ namespace FYP.Models
 
         [Required]
         [StringLength(50)]
-        public string Password { get; set; }
+        public string TEmail { get; set; }
 
         [Required]
-        [StringLength(50)]
-        public string Email { get; set; }
+        [StringLength(250)]
+        public string TPassword { get; set; }
+
+        public bool? TEmailVerification { get; set; }
+
+        public Guid? TActivetionCode { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Fyp_Idea> Fyp_Idea { get; set; }

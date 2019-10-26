@@ -6,6 +6,8 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 
@@ -14,6 +16,36 @@ namespace FYP.Controllers
     public class HomeController : Controller
     {
         private Model1 db = new Model1();
+        public bool IsEmailExists(string eMail)
+        {
+            var IsCheck = db.Student_SignUp.Where(email => email.Email == eMail).FirstOrDefault();
+            return IsCheck != null;
+        }
+        public void SendEmailToUser(string emailId, string activationCode)
+        {
+            var GenarateUserVerificationLink = "/Home/UserVerification/" + activationCode;
+            var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, GenarateUserVerificationLink);
+
+            var fromMail = new MailAddress("ahtasham067@gmail.com", "Ahtasham"); // set your email  
+            var fromEmailpassword = "99009988067"; // Set your password   
+            var toEmail = new MailAddress(emailId);
+
+            var smtp = new SmtpClient();
+            smtp.Host = "smtp.gmail.com";
+            smtp.Port = 587;
+            smtp.EnableSsl = true;
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new NetworkCredential(fromMail.Address, fromEmailpassword);
+
+            var Message = new MailMessage(fromMail, toEmail);
+            Message.Subject = "Registration Completed-Demo";
+            Message.Body = "<br/> Your registration completed succesfully." +
+                           "<br/> please click on the below link for account verification" +
+                           "<br/><br/><a href=" + link + ">" + link + "</a>";
+            Message.IsBodyHtml = true;
+            smtp.Send(Message);
+        }
         public ActionResult Index()
         {
             return View();
@@ -32,11 +64,87 @@ namespace FYP.Controllers
 
             return View();
         }
+        [HttpGet]
         public ActionResult SignUp()
         {
-            
+            var getitemlist = db.Campus.ToList();
+            SelectList list = new SelectList(getitemlist, "CampusId", "CampusName");
+            ViewBag.campuslist = list;
+
+            var getitemlist1 = db.Batches.ToList();
+            SelectList list1 = new SelectList(getitemlist1, "BatchId", "BatchName");
+            ViewBag.batchlist = list1;
+
+            var getitemlist2 = db.Programs.ToList();
+            SelectList list2 = new SelectList(getitemlist2, "ProgramId", "ProgramName");
+            ViewBag.programlist = list2;
+
 
             return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SignUp(SignUpVM objUsr)
+        {
+            // email not verified on registration time  
+            objUsr.EmailVerification = false;
+
+            var IsExists = IsEmailExists(objUsr.Email);
+            if (IsExists)
+            {
+                ModelState.AddModelError("EmailExists", "Email already Exists");
+                return View("SignUp");
+            }
+            //it generate unique code     
+            objUsr.ActivetionCode = Guid.NewGuid();
+            //password convert  
+            objUsr.Password = FYP.Models.encryptPassword.textToEncrypt(objUsr.Password);
+            //insert data
+            string mainconn = ConfigurationManager.ConnectionStrings["Model19"].ConnectionString;
+            SqlConnection sqlconn = new SqlConnection(mainconn);
+            string sqlquery1 = "insert into [dbo].[Student_SignUp] (FullName,Campus,Batch,Program,RegNo,Password,Email,ActivetionCode) values (@FullName,@Campus,@Batch,@Program,@RegNo,@Password,@Email,@ActivetionCode)";
+            SqlCommand sqlcomm = new SqlCommand(sqlquery1, sqlconn);
+            sqlconn.Open();
+            sqlcomm.Parameters.AddWithValue("@FullName", objUsr.FullName);
+            sqlcomm.Parameters.AddWithValue("@Campus", objUsr.Campus);
+            sqlcomm.Parameters.AddWithValue("@Batch", objUsr.Batch);
+            sqlcomm.Parameters.AddWithValue("@Program", objUsr.Program);
+            sqlcomm.Parameters.AddWithValue("@RegNo", objUsr.RegNo);
+            sqlcomm.Parameters.AddWithValue("@Password", objUsr.Password);
+            sqlcomm.Parameters.AddWithValue("@Email", objUsr.Email);
+            sqlcomm.Parameters.AddWithValue("@ActivetionCode", objUsr.ActivetionCode);
+            sqlcomm.ExecuteNonQuery();
+            sqlconn.Close();
+            //email sent
+            SendEmailToUser(objUsr.Email, objUsr.ActivetionCode.ToString());
+            var Message = "Registration complete please check email";
+            ViewBag.Message = Message;
+           
+            return RedirectToAction("SignUp");
+        }
+
+
+        public ActionResult UserVerification(string id)
+        {
+            bool Status = false;
+
+            db.Configuration.ValidateOnSaveEnabled = false; // Ignor to password confirmation   
+            var IsVerify = db.Student_SignUp.Where(u => u.ActivetionCode == new Guid(id)).FirstOrDefault();
+
+            if (IsVerify != null)
+            {
+                IsVerify.EmailVerification = true;
+                db.SaveChanges();
+                ViewBag.Message = "Email Verification completed";
+                Status = true;
+            }
+            else
+            {
+                ViewBag.Message = "Invalid Request...Email not verify";
+                ViewBag.Status = false;
+            }
+
+            return View("SignUp");
         }
         [HttpGet]
         public ActionResult AddLoginDetail()
@@ -152,55 +260,7 @@ namespace FYP.Controllers
         {
             return View();
         }
-        public ActionResult SRSEvaluationForm1()
-        {
-            string mainconn = ConfigurationManager.ConnectionStrings["Model1"].ConnectionString;
-            SqlConnection sqlconn = new SqlConnection(mainconn);
 
-
-            string sqlquery1 = "SELECT CoSupervisorName FROM [dbo].[Co_Supervisor]";
-            SqlCommand sqlcomm = new SqlCommand(sqlquery1, sqlconn);
-            sqlconn.Open();
-            var reader = sqlcomm.ExecuteReader();
-
-            List<Supervisor> records = new List<Supervisor>();
-            while (reader.Read())
-            {
-                var record = new Supervisor();
-                var docid = Convert.ToInt32(reader["Model1"]);
-                record.SupervisorName = reader["SupervisorName"].ToString();
-
-                records.Add(record);
-            }
-            sqlconn.Close();
-            return View();
-
-        }
-        //[HttpGet]
-        //public ActionResult Students()
-        //{
-        //    string mainconn = ConfigurationManager.ConnectionStrings["Model1"].ConnectionString;
-        //    SqlConnection sqlconn = new SqlConnection(mainconn);
-        //    String sql = "SELECT SupervisorName FROM [dbo].[Supervisor]";
-        //    SqlCommand cmd = new SqlCommand(sql, sqlconn);
-
-        //    var model = new List<Supervisor>();
-        //    using (SqlConnection conn = new SqlConnection(mainconn))
-        //    {
-        //        sqlconn.Open();
-        //        SqlDataReader rdr = cmd.ExecuteReader();
-        //        while (rdr.Read())
-        //        {
-        //            var student = new Supervisor();
-        //            student.SupervisorName = rdr["SupervisorName"].ToString();
-        //    model.Add(student);
-        //        }
-        //        sqlconn.Close();
-
-        //    }
-
-        //    return View(model);
-        //}
         [HttpGet]
         public ActionResult Student()
         {
@@ -227,11 +287,16 @@ namespace FYP.Controllers
         {
             if (ProposalFile != null)
             {
+                var supportedTypes = new[] { "zip", "rar" };
+                var fileExt = System.IO.Path.GetExtension(ProposalFile.FileName).Substring(1);
+                if (supportedTypes.Contains(fileExt))
+                {
                     string filename = Path.GetFileName(ProposalFile.FileName);
                     ProposalFile.SaveAs(Server.MapPath("/ProposalFiles/" + filename));
                     string mainconn = ConfigurationManager.ConnectionStrings["Model15"].ConnectionString;
                     SqlConnection sqlconn = new SqlConnection(mainconn);
-                    string sqlquery1 = "insert into [dbo].[Project] (Title,Supervisor,CoSupervisor,Summary,Objective,Scope,ToolsAndTechnologies,ProposalFileType,ProposalFilePath,ProposalFileName) values (@Title,@Supervisor,@CoSupervisor,@Summary,@Objective,@Scope,@ToolsAndTechnologies,@ProposalFileType,@ProposalFilePath,@ProposalFileName)";
+                    string sqlquery1 = "insert into [dbo].[Project] (Title,Supervisor,CoSupervisor,Summary,Objective,Scope,ToolsAndTechnologies,ProposalFileType,ProposalFilePath,ProposalFileName) values (@Title,@Supervisor,@CoSupervisor,@Summary,@Objective,@Scope,@ToolsAndTechnologies,@ProposalFileType,@ProposalFilePath,@ProposalFileName);SELECT SCOPE_IDENTITY();";
+
                     SqlCommand sqlcomm = new SqlCommand(sqlquery1, sqlconn);
                     byte[] bytes;
                     using (BinaryReader br = new BinaryReader(ProposalFile.InputStream))
@@ -240,7 +305,7 @@ namespace FYP.Controllers
 
                     }
                     sqlconn.Open();
-                    sqlcomm.Parameters.AddWithValue("@ProposalFileName",filename);
+                    sqlcomm.Parameters.AddWithValue("@ProposalFileName", filename);
                     sqlcomm.Parameters.AddWithValue("@Title", obj.Title);
                     sqlcomm.Parameters.AddWithValue("@Supervisor", obj.Supervisor);
                     sqlcomm.Parameters.AddWithValue("@CoSupervisor", obj.CoSupervisor);
@@ -250,39 +315,63 @@ namespace FYP.Controllers
                     sqlcomm.Parameters.AddWithValue("@ToolsAndTechnologies", obj.ToolsAndTechnologies);
                     sqlcomm.Parameters.AddWithValue("@ProposalFileType", ProposalFile.ContentType);
                     sqlcomm.Parameters.AddWithValue("@ProposalFilePath", @"/ProposalFiles/" + filename);
-                    sqlcomm.ExecuteNonQuery();
-                    
-                    StudentVM vm = new StudentVM();
-                    var projectid4 = obj.ProjectId;
+                    var insertedId = sqlcomm.ExecuteScalar();
+                    if(obj.RegNo1 !=null && obj.StudentName1 !=null && obj.Semester1 != 0 && obj.Email1 != null && obj.ContactNo1 != 0 )
+                    {
+                        string sqlquery2 = "insert into [dbo].[Project_Student] (Semester,Email,ContactNo,StudentName,RegNo,ProjectId) VALUES (@Semester,@Email,@ContactNo,@StudentName,@RegNo,@ProjectId)";
+                        SqlCommand sqlcomm1 = new SqlCommand(sqlquery2, sqlconn);
+                        sqlcomm1.Parameters.AddWithValue("@Semester", obj.Semester1);
+                        sqlcomm1.Parameters.AddWithValue("@Email", obj.Email1);
+                        sqlcomm1.Parameters.AddWithValue("@ContactNo", obj.ContactNo1);
+                        sqlcomm1.Parameters.AddWithValue("@StudentName", obj.StudentName1);
+                        sqlcomm1.Parameters.AddWithValue("@RegNo", obj.RegNo1);
+                        sqlcomm1.Parameters.AddWithValue("@ProjectId", insertedId);
+                        sqlcomm1.ExecuteScalar();
 
+                    }
+                    if (obj.RegNo2 != null && obj.StudentName2 != null && obj.Semester2 != 0 && obj.Email2 != null && obj.ContactNo2 != 0)
+                    {
+                        string sqlquery3 = "insert into [dbo].[Project_Student] (Semester,Email,ContactNo,StudentName,RegNo,ProjectId) VALUES (@Semester,@Email,@ContactNo,@StudentName,@RegNo,@ProjectId)";
+                        SqlCommand sqlcomm1 = new SqlCommand(sqlquery3, sqlconn);
+                        sqlcomm1.Parameters.AddWithValue("@Semester", obj.Semester2);
+                        sqlcomm1.Parameters.AddWithValue("@Email", obj.Email2);
+                        sqlcomm1.Parameters.AddWithValue("@ContactNo", obj.ContactNo2);
+                        sqlcomm1.Parameters.AddWithValue("@StudentName", obj.StudentName2);
+                        sqlcomm1.Parameters.AddWithValue("@RegNo", obj.RegNo2);
+                        sqlcomm1.Parameters.AddWithValue("@ProjectId", insertedId);
+                        sqlcomm1.ExecuteScalar();
+                    }
 
-                    sqlconn.Close();
-                    Project p = new Project();
-                    var ProjectId3 = p.ProjectId;
+                }
             }
             else
             {
                 if (SrsFile != null)
                 {
-                    string filename = Path.GetFileName(SrsFile.FileName);
-                    SrsFile.SaveAs(Server.MapPath("/SrsFiles/" + filename));
-                    string mainconn = ConfigurationManager.ConnectionStrings["Model15"].ConnectionString;
-                    SqlConnection sqlconn = new SqlConnection(mainconn);
-                    string sqlquery1 = "UPDATE [dbo].[Project] SET SrsFileType=@SrsFileType,SrsFilePath=@SrsFilePath,SrsFileName=@SrsFileName WHERE ProjectId=@ProjectId";
-                    SqlCommand sqlcomm = new SqlCommand(sqlquery1, sqlconn);
-                    byte[] bytes;
-                    using (BinaryReader br = new BinaryReader(SrsFile.InputStream))
+                    var supportedTypes = new[] { "zip", "rar" };
+                    var fileExt = System.IO.Path.GetExtension(SreFile.FileName).Substring(1);
+                    if (supportedTypes.Contains(fileExt))
                     {
-                        bytes = br.ReadBytes(SrsFile.ContentLength);
+                        string filename = Path.GetFileName(SrsFile.FileName);
+                        SrsFile.SaveAs(Server.MapPath("/SrsFiles/" + filename));
+                        string mainconn = ConfigurationManager.ConnectionStrings["Model15"].ConnectionString;
+                        SqlConnection sqlconn = new SqlConnection(mainconn);
+                        string sqlquery1 = "UPDATE [dbo].[Project] SET SrsFileType=@SrsFileType,SrsFilePath=@SrsFilePath,SrsFileName=@SrsFileName WHERE ProjectId=@ProjectId";
+                        SqlCommand sqlcomm = new SqlCommand(sqlquery1, sqlconn);
+                        byte[] bytes;
+                        using (BinaryReader br = new BinaryReader(SrsFile.InputStream))
+                        {
+                            bytes = br.ReadBytes(SrsFile.ContentLength);
 
+                        }
+                        sqlconn.Open();
+                        sqlcomm.Parameters.AddWithValue("@SrsFileName", filename);
+                        sqlcomm.Parameters.AddWithValue("@SrsFileType", SrsFile.ContentType);
+                        sqlcomm.Parameters.AddWithValue("@ProjectId", 1);
+                        sqlcomm.Parameters.AddWithValue("@SrsFilePath", @"/SrsFiles/" + filename);
+                        sqlcomm.ExecuteNonQuery();
+                        sqlconn.Close();
                     }
-                    sqlconn.Open();
-                    sqlcomm.Parameters.AddWithValue("@SrsFileName", filename);
-                    sqlcomm.Parameters.AddWithValue("@SrsFileType", SrsFile.ContentType);
-                    sqlcomm.Parameters.AddWithValue("@ProjectId", 1);
-                    sqlcomm.Parameters.AddWithValue("@SrsFilePath", @"/SrsFiles/" + filename);
-                    sqlcomm.ExecuteNonQuery();
-                    sqlconn.Close();
                 }
                 else
                 {
@@ -290,15 +379,8 @@ namespace FYP.Controllers
                     {
                         var supportedTypes = new[] { "zip", "rar"};
                         var fileExt = System.IO.Path.GetExtension(SreFile.FileName).Substring(1);
-                        //if (!supportedTypes.Contains(fileExt))
-                        //{
-                        //    ErrorMessage = "File Extension Is InValid - Only Upload WORD/PDF/EXCEL/TXT File";
-                        //    return ErrorMessage;
-                        //}
-
                         if (supportedTypes.Contains(fileExt))
                         {
-
                             string filename = Path.GetFileName(SreFile.FileName);
                             SreFile.SaveAs(Server.MapPath("/SreFiles/" + filename));
                             string mainconn = ConfigurationManager.ConnectionStrings["Model15"].ConnectionString;
@@ -318,6 +400,96 @@ namespace FYP.Controllers
                             sqlcomm.Parameters.AddWithValue("@SreFilePath", @"/SreFiles/" + filename);
                             sqlcomm.ExecuteNonQuery();
                             sqlconn.Close();
+                        }
+                    }
+                    else
+                    {
+                        if (Code != null)
+                        {
+                            var supportedTypes = new[] { "zip", "rar" };
+                            var fileExt = System.IO.Path.GetExtension(Code.FileName).Substring(1);
+                            if (supportedTypes.Contains(fileExt))
+                            {
+                                string filename = Path.GetFileName(Code.FileName);
+                                Code.SaveAs(Server.MapPath("/CodeFiles/" + filename));
+                                string mainconn = ConfigurationManager.ConnectionStrings["Model15"].ConnectionString;
+                                SqlConnection sqlconn = new SqlConnection(mainconn);
+                                string sqlquery1 = "UPDATE [dbo].[Project] SET CodeFileType=@CodeFileType,CodeFilePath=@CodeFilePath,CodeFileName=@CodeFileName WHERE ProjectId=@ProjectId";
+                                SqlCommand sqlcomm = new SqlCommand(sqlquery1, sqlconn);
+                                byte[] bytes;
+                                using (BinaryReader br = new BinaryReader(Code.InputStream))
+                                {
+                                    bytes = br.ReadBytes(Code.ContentLength);
+
+                                }
+                                sqlconn.Open();
+                                sqlcomm.Parameters.AddWithValue("@CodeFileName", filename);
+                                sqlcomm.Parameters.AddWithValue("@CodeFileType", Code.ContentType);
+                                sqlcomm.Parameters.AddWithValue("@ProjectId", 1);
+                                sqlcomm.Parameters.AddWithValue("@CodeFilePath", @"/CodeFiles/" + filename);
+                                sqlcomm.ExecuteNonQuery();
+                                sqlconn.Close();
+                            }
+                        }
+                        else
+                        {
+                            if (Prototype != null)
+                            {
+                                var supportedTypes = new[] { "zip", "rar" };
+                                var fileExt = System.IO.Path.GetExtension(Prototype.FileName).Substring(1);
+                                if (supportedTypes.Contains(fileExt))
+                                {
+                                    string filename = Path.GetFileName(Prototype.FileName);
+                                    Prototype.SaveAs(Server.MapPath("/PrototypeFiles/" + filename));
+                                    string mainconn = ConfigurationManager.ConnectionStrings["Model15"].ConnectionString;
+                                    SqlConnection sqlconn = new SqlConnection(mainconn);
+                                    string sqlquery1 = "UPDATE [dbo].[Project] SET PrototypeFileType=@PrototypeFileType,PrototypeFilePath=@PrototypeFilePath,PrototypeFileName=@PrototypeFileName WHERE ProjectId=@ProjectId";
+                                    SqlCommand sqlcomm = new SqlCommand(sqlquery1, sqlconn);
+                                    byte[] bytes;
+                                    using (BinaryReader br = new BinaryReader(Prototype.InputStream))
+                                    {
+                                        bytes = br.ReadBytes(Prototype.ContentLength);
+
+                                    }
+                                    sqlconn.Open();
+                                    sqlcomm.Parameters.AddWithValue("@PrototypeFileName", filename);
+                                    sqlcomm.Parameters.AddWithValue("@PrototypeFileType", Prototype.ContentType);
+                                    sqlcomm.Parameters.AddWithValue("@ProjectId", 1);
+                                    sqlcomm.Parameters.AddWithValue("@PrototypeFilePath", @"/PrototypeFiles/" + filename);
+                                    sqlcomm.ExecuteNonQuery();
+                                    sqlconn.Close();
+                                }
+                            }
+                            else
+                            {
+                                if (FinalReport != null)
+                                {
+                                    var supportedTypes = new[] { "zip", "rar" };
+                                    var fileExt = System.IO.Path.GetExtension(FinalReport.FileName).Substring(1);
+                                    if (supportedTypes.Contains(fileExt))
+                                    {
+                                        string filename = Path.GetFileName(FinalReport.FileName);
+                                        FinalReport.SaveAs(Server.MapPath("/FinalReportFiles/" + filename));
+                                        string mainconn = ConfigurationManager.ConnectionStrings["Model15"].ConnectionString;
+                                        SqlConnection sqlconn = new SqlConnection(mainconn);
+                                        string sqlquery1 = "UPDATE [dbo].[Project] SET FinalReportFileType=@FinalReportFileType,FinalReportFilePath=@FinalReportFilePath,FinalReportFileName=@FinalReportFileName WHERE ProjectId=@ProjectId";
+                                        SqlCommand sqlcomm = new SqlCommand(sqlquery1, sqlconn);
+                                        byte[] bytes;
+                                        using (BinaryReader br = new BinaryReader(FinalReport.InputStream))
+                                        {
+                                            bytes = br.ReadBytes(FinalReport.ContentLength);
+
+                                        }
+                                        sqlconn.Open();
+                                        sqlcomm.Parameters.AddWithValue("@FinalReportFileName", filename);
+                                        sqlcomm.Parameters.AddWithValue("@FinalReportFileType", FinalReport.ContentType);
+                                        sqlcomm.Parameters.AddWithValue("@ProjectId", 1);
+                                        sqlcomm.Parameters.AddWithValue("@FinalReportFilePath", @"/FinalReportFiles/" + filename);
+                                        sqlcomm.ExecuteNonQuery();
+                                        sqlconn.Close();
+                                    }
+                                }
+                            }
                         }
                     }
                 }

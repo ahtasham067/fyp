@@ -52,66 +52,54 @@ namespace FYP.Models
         [StringLength(500)]
         public string ProposalFileType { get; set; }
 
-        [Required]
         [StringLength(500)]
         public string ProposalFilePath { get; set; }
 
-        [Required]
         [StringLength(500)]
         public string ProposalFileName { get; set; }
 
         [StringLength(500)]
         public string SrsFileType { get; set; }
 
-        [Required]
         [StringLength(500)]
         public string SrsFilePath { get; set; }
 
-        [Required]
         [StringLength(500)]
         public string SrsFileName { get; set; }
 
         [StringLength(500)]
         public string SreFileType { get; set; }
 
-        [Required]
         [StringLength(500)]
         public string SreFilePath { get; set; }
 
-        [Required]
         [StringLength(500)]
         public string SreFileName { get; set; }
 
         [StringLength(500)]
         public string CodeFileType { get; set; }
 
-        [Required]
         [StringLength(500)]
         public string CodeFilePath { get; set; }
 
-        [Required]
         [StringLength(500)]
         public string CodeFileName { get; set; }
 
         [StringLength(500)]
         public string PrototypeFileType { get; set; }
 
-        [Required]
         [StringLength(500)]
         public string PrototypeFilePath { get; set; }
 
-        [Required]
         [StringLength(500)]
         public string PrototypeFileName { get; set; }
 
         [StringLength(500)]
         public string FinalReportFileType { get; set; }
 
-        [Required]
         [StringLength(500)]
         public string FinalReportFilePath { get; set; }
 
-        [Required]
         [StringLength(500)]
         public string FinalReportFileName { get; set; }
 

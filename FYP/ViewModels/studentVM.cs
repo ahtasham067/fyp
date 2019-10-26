@@ -50,21 +50,36 @@ namespace FYP.ViewModels
         [StringLength(500)]
         public string ProposalFileName { get; set; }
 
-        public int Semester { get; set; }
+        public int Semester1 { get; set; }
+        public int Semester2 { get; set; }
+        public int Semester3 { get; set; }
+        public int Semester4 { get; set; }
 
         [Required]
         [StringLength(50)]
-        public string Email { get; set; }
+        public string Email1 { get; set; }
+        public string Email2 { get; set; }
+        public string Email3 { get; set; }
+        public string Email4 { get; set; }
 
-        public int ContactNo { get; set; }
+        public int ContactNo1 { get; set; }
+        public int ContactNo2 { get; set; }
+        public int ContactNo3 { get; set; }
+        public int ContactNo4 { get; set; }
 
         [Required]
         [StringLength(50)]
-        public string StudentName { get; set; }
+        public string StudentName1 { get; set; }
+        public string StudentName2 { get; set; }
+        public string StudentName3 { get; set; }
+        public string StudentName4 { get; set; }
 
         [Required]
         [StringLength(50)]
-        public string RegNo { get; set; }
+        public string RegNo1 { get; set; }
+        public string RegNo2 { get; set; }
+        public string RegNo3 { get; set; }
+        public string RegNo4 { get; set; }
 
         public int ProjectId { get; set; }
     }

@@ -1,4 +1,5 @@
-﻿
+﻿@model FYP.ViewModels.SignUpVM
+
 @{
     Layout = null;
 }
@@ -50,226 +51,216 @@
         </div>
         <hr class="style1">
         <!-- Student Sin Up -->
-        <div class="container rounded formwidthfontcolor" id="StudentSinUp">
-            <form>
-                <div class="text-center">
-                    <h1>
-                        Student Sign Up
-                    </h1>
-                </div>
-                <!--Project Full Name-->
-                <div class="form-group">
-                    <label for="inputFullName">
-                        <span class="text-danger">
-                            *
-                        </span>
-                        Full Name
-                    </label>
-                    <input class="form-control" id="inputFullName" placeholder="*Dr.Albert lion" type="text">
-                    </input>
-                </div>
-                <!--First member-->
-                <div class="form-row">
-                    <div class="form-group col-md-3">
-                        <label for="inputSemester">
-                            <span class="text-danger">
-                                *
-                            </span>
-                            Campus
-                        </label>
-                        <select class="form-control" id="inputSemester">
-                            <option selected="">
-                                Sahiwal
-                            </option>
-                            <option>
-                                ...
-                            </option>
-                        </select>
+        @using (Html.BeginForm("SignUp", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="container rounded formwidthfontcolor" id="StudentSinUp">
+                <form>
+                    <div class="text-center">
+                        <h1>
+                            Student Sign Up
+                        </h1>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="inputSemester">
+                    <!--Project Full Name-->
+                    <div class="form-group">
+                        <label for="inputFullName">
                             <span class="text-danger">
                                 *
                             </span>
-                            Batch
+                            Full Name
                         </label>
-                        <select class="form-control" id="inputSemester">
-                            <option selected="">
-                                sp16
-                            </option>
-                            <option>
-                                ...
-                            </option>
-                        </select>
+                        @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                        @ViewBag.Message
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="inputSemester">
-                            <span class="text-danger">
-                                *
-                            </span>
-                            Program
-                        </label>
-                        <select class="form-control" id="inputSemester">
-                            <option selected="">
-                                Bcs
-                            </option>
-                            <option>
-                                ...
-                            </option>
-                        </select>
+                    <!--First member-->
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label for="inputSemester">
+                                <span class="text-danger">
+                                    *
+                                </span>
+                                Campus
+                            </label>
+                            @Html.DropDownListFor(Model => Model.Campus, ViewBag.campuslist as SelectList, "Campus", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="inputSemester">
+                                <span class="text-danger">
+                                    *
+                                </span>
+                                Batch
+                            </label>
+                            @Html.DropDownListFor(Model => Model.Batch, ViewBag.batchlist as SelectList, "Batch", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="inputSemester">
+                                <span class="text-danger">
+                                    *
+                                </span>
+                                Program
+                            </label>
+                            
+                            @Html.DropDownListFor(Model => Model.Program, ViewBag.programlist as SelectList, "Program", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="inputCity">
+                                <span class="text-danger">
+                                    *
+                                </span>
+                                RegNo
+                            </label>
+                            @Html.EditorFor(model => model.RegNo, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.RegNo, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="inputCity">
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="Password">
                             <span class="text-danger">
                                 *
                             </span>
-                            RegNo
+                            Password
                         </label>
-                        <input class="form-control" id="inputCity" placeholder="00" type="text">
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                    <!-- Conform Password -->
+                    <div class="form-group">
+                        <label for="ConformPassword">
+                            <span class="text-danger">
+                                *
+                            </span>
+                            Confirm Password
+                        </label>
+                        @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                    </div>
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="Email">
+                            <span class="text-danger">
+                                *
+                            </span>
+                            Email
+                        </label>
+                        @Html.EditorFor(model => model.Email, new { Type = "Email", htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        @Html.ValidationMessage("EmailExists", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-row">
+                        <div class="m-2">
+                            <button class="btn btn-primary" type="submit">
+                                Sign Up
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        }
+        <!--Teacher Sin Up-->
+        @using (Html.BeginForm("SignUp", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="container rounded formwidthfontcolor" id="TeacherSinUp">
+                <form>
+                    <div class="text-center">
+                        <h1>
+                            Teacher Sin Up
+                        </h1>
+                    </div>
+                    <!--Full Name-->
+                    <div class="form-group">
+                        <label for="inputFullName">
+                            <span class="text-danger">
+                                *
+                            </span>
+                            Full Name
+                        </label>
+                        <input class="form-control" id="inputFullName" placeholder="*FullName" type="text">
                         </input>
                     </div>
-                </div>
-                <!-- Password -->
-                <div class="form-group">
-                    <label for="Password">
-                        <span class="text-danger">
-                            *
-                        </span>
-                        Password
-                    </label>
-                    <input class="form-control" id="Password" placeholder="*Password" type="Password">
-                    </input>
-                </div>
-                <!-- Conform Password -->
-                <div class="form-group">
-                    <label for="ConformPassword">
-                        <span class="text-danger">
-                            *
-                        </span>
-                        Confirm Password
-                    </label>
-                    <input class="form-control" id="ConfirmPassword" placeholder="*ConformPassword" type="Password">
-                    </input>
-                </div>
-                <!-- Password -->
-                <div class="form-group">
-                    <label for="Email">
-                        <span class="text-danger">
-                            *
-                        </span>
-                        Email
-                    </label>
-                    <input class="form-control" id="Email" placeholder="*gmail.com" type="Text">
-                    </input>
-                </div>
-
-                <div class="form-row">
-                    <div class="m-2">
-                        <button class="btn btn-primary" type="submit">
-                            Sign Up
-                        </button>
+                    <!-- Teacher ID -->
+                    <div class="form-group">
+                        <label for="inputFullName">
+                            <span class="text-danger">
+                                *
+                            </span>
+                            Teacher ID
+                        </label>
+                        <input class="form-control" id="inputFullName" placeholder="*FullName" type="text">
+                        </input>
                     </div>
-                </div>
-            </form>
-        </div>
-        <!--Teacher Sin Up-->
-        <div class="container rounded formwidthfontcolor" id="TeacherSinUp">
-            <form>
-                <div class="text-center">
-                    <h1>
-                        Teacher Sin Up
-                    </h1>
-                </div>
-                <!--Full Name-->
-                <div class="form-group">
-                    <label for="inputFullName">
-                        <span class="text-danger">
-                            *
-                        </span>
-                        Full Name
-                    </label>
-                    <input class="form-control" id="inputFullName" placeholder="*FullName" type="text">
-                    </input>
-                </div>
-                <!-- Teacher ID -->
-                <div class="form-group">
-                    <label for="inputFullName">
-                        <span class="text-danger">
-                            *
-                        </span>
-                        Teacher ID
-                    </label>
-                    <input class="form-control" id="inputFullName" placeholder="*FullName" type="text">
-                    </input>
-                </div>
-                <!-- Password -->
-                <div class="form-group">
-                    <label for="Password">
-                        <span class="text-danger">
-                            *
-                        </span>
-                        Password
-                    </label>
-                    <input class="form-control" id="Password" placeholder="*Password" type="Password">
-                    </input>
-                </div>
-                <!-- Conform Password -->
-                <div class="form-group">
-                    <label for="ConformPassword">
-                        <span class="text-danger">
-                            *
-                        </span>
-                        Conform Password
-                    </label>
-                    <input class="form-control" id="ConformPassword" placeholder="*ConformPassword" type="Password">
-                    </input>
-                </div>
-                <!-- Password -->
-                <div class="form-group">
-                    <label for="Email">
-                        <span class="text-danger">
-                            *
-                        </span>
-                        Email
-                    </label>
-                    <input class="form-control" id="Email" placeholder="*Email" type="Text">
-                    </input>
-                </div>
-                <div class="form-row">
-                    <div class="m-2">
-                        <button class="btn btn-primary" type="submit">
-                            Sign Up
-                        </button>
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="Password">
+                            <span class="text-danger">
+                                *
+                            </span>
+                            Password
+                        </label>
+                        <input class="form-control" id="Password" placeholder="*Password" type="Password">
+                        </input>
                     </div>
-                </div>
-            </form>
-        </div>
+                    <!-- Conform Password -->
+                    <div class="form-group">
+                        <label for="ConformPassword">
+                            <span class="text-danger">
+                                *
+                            </span>
+                            Conform Password
+                        </label>
+                        <input class="form-control" id="ConformPassword" placeholder="*ConformPassword" type="Password">
+                        </input>
+                    </div>
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="Email">
+                            <span class="text-danger">
+                                *
+                            </span>
+                            Email
+                        </label>
+                        <input class="form-control" id="Email" placeholder="*Email" type="Text">
+                        </input>
+                    </div>
+                    <div class="form-row">
+                        <div class="m-2">
+                            <button class="btn btn-primary" type="submit">
+                                Sign Up
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        }
         <div class="row mt-3">
-            <div class="col footerbackgroundcolor">
-                <div class="text-center mt-3 footertextcolor">
-                    <a href="#">
-                        FYPOnline,
-                    </a>
-                    Principal Seat © 2018-COMSATS ®
+                <div class="col footerbackgroundcolor">
+                    <div class="text-center mt-3 footertextcolor">
+                        <a href="#">
+                            FYPOnline,
+                        </a>
+                        Principal Seat © 2018-COMSATS ®
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 </body>
 </html>
 <script type="text/javascript">
     $(document).ready(function () {
-                $("#StudentSinUp").show();
-                $("#TeacherSinUp").hide();
-            });
+        $("#StudentSinUp").show();
+        $("#TeacherSinUp").hide();
+    });
 
-            $(".TeacherSinUp").click(function () {
-                $("#TeacherSinUp").show();
-                $("#StudentSinUp").hide();
-            });
+    $(".TeacherSinUp").click(function () {
+        $("#TeacherSinUp").show();
+        $("#StudentSinUp").hide();
+    });
 
-             $(".StudentSinUp").click(function () {
-                $("#TeacherSinUp").hide();
-                $("#StudentSinUp").show();
-            });
+    $(".StudentSinUp").click(function () {
+        $("#TeacherSinUp").hide();
+        $("#StudentSinUp").show();
+    });
 </script>

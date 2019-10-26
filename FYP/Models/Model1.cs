@@ -8,7 +8,7 @@ namespace FYP.Models
     public partial class Model1 : DbContext
     {
         public Model1()
-            : base("name=Model15")
+            : base("name=Model19")
         {
         }
 
@@ -222,11 +222,11 @@ namespace FYP.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Student_SignUp>()
-                .Property(e => e.Password)
+                .Property(e => e.FullName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Student_SignUp>()
-                .Property(e => e.Email)
+                .Property(e => e.RegNo)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Supervisor>()
@@ -250,19 +250,11 @@ namespace FYP.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Teacher_SignUp>()
-                .Property(e => e.FullName)
+                .Property(e => e.TFullName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Teacher_SignUp>()
                 .Property(e => e.TeacherId)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Teacher_SignUp>()
-                .Property(e => e.Password)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Teacher_SignUp>()
-                .Property(e => e.Email)
                 .IsUnicode(false);
         }
     }
